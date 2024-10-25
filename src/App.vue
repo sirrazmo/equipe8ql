@@ -6,7 +6,7 @@
           Bienvenue sur votre appli
         </p>
         <p class="subtitle">
-          Votre gulvivb de réservation
+          Votre application de réservation
         </p>
       </div>
     </section>
