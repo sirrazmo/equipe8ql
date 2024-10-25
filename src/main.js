@@ -1,4 +1,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import "bulma/css/bulma.css"
 
-createApp(App).mount('#app')
+
+import {db, auth} from './firebase.js';
+
+const app = createApp(App);
+
+app.config.globalProperties.$db =db;
+app.config.globalProperties.$auth= auth;
+
+app.mount('#app');
