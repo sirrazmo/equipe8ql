@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1> Page principale</h1>
+
     <Connexion />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <section class="hero is-primary">
+  <div class="container">
+    <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">
           Bienvenue sur votre appli
@@ -17,7 +17,7 @@
       <br>
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Matricule">
+          <input class="input" type="text" placeholder="Matricule" required>
           <span class="icon is-small is-left">
             <i class="fa-solid fa-id-card-clip"></i>
           </span>
@@ -26,7 +26,7 @@
 
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password">
+          <input class="input" type="password" placeholder="Password" required>
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -36,28 +36,48 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <p class="control">
-              <button class="button is-warning is-rounded is-center">
+              <button class="button is-warning is-rounded is-center" onclick="verificationFormulaire">
                 Se connecter
               </button>
             </p>
+            <br>
           </div>
         </div>
       </div>
     </section>
-    </div>
+  </div>
 </template>
 
 <script>
 
+
+
+
 export default {
-/* eslint-disable */
+  /* eslint-disable */
   name: 'connexion',
-  props: {
-    msg: String
+  data() {
+    return {
+      matricule: '',
+      password: ''
+    };
+  },
+};  
+
+function verificationFormulaire() {
+    if (matricule == '') {
+      alert('Veuillez indiquer votre matricule')
+    }
+    else if (mdp == '') {
+      alert('Veuillez indiquer votre mot de passe')
+    }
+    else {
+      alert('Connexion effectuée')
+    }
+    console.log('La fonction a été appelée');
   }
-}
+
 </script>
 
-<style scoped>
 
-</style>
+<style scoped></style>
