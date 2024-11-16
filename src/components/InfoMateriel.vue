@@ -116,8 +116,7 @@
             <div class="container is-fluid">
                 <div class="columns is-centered">
                     <div class="column is-narrow">
-                        <button class="button is-warning is-rounded is-center"
-                            @click="reserver">
+                        <button class="button is-warning is-rounded is-center" @click="reserver">
                             Reserver
                         </button>
                     </div>
@@ -126,6 +125,8 @@
             <br>
         </section>
     </div>
+
+    
 </template>
 
 <script>
@@ -139,7 +140,7 @@ export default {
             Reference: '',
             Numero: '',
             DateDebut: '',
-            DateFin: ''
+            DateFin: '',
         };
     },
 
