@@ -30,7 +30,7 @@
                         <p class="control has-icons-left">
                             <input class="input" type="text" placeholder="Ref : " id="Reference" required>
                             <span class="icon is-small is-left">
-                                <i class="fa-solid fa-id-card-clip"></i>
+                                <i class="fa-solid fa-barcode"></i>
                             </span>
                         </p>
 
@@ -44,7 +44,7 @@
                         <p class="control has-icons-left">
                             <input class="input" type="text" placeholder="Version : " id="Version" required>
                             <span class="icon is-small is-left">
-                                <i class="fa-solid fa-id-card-clip"></i>
+                                <i class="fa-solid fa-gears"></i>
                             </span>
                         </p>
 
@@ -52,7 +52,7 @@
                         <p class="control has-icons-left">
                             <input class="input" type="text" placeholder="Numero : " id="Numero" required>
                             <span class="icon is-small is-left">
-                                <i class="fa-solid fa-id-card-clip"></i>
+                                <i class="fa-solid fa-list-ol"></i>
                             </span>
                         </p>
 
@@ -98,7 +98,7 @@
                     <p class="control has-icons-left">
                         <input class="input" type="date" placeholder="Date de début : " id="DateDebut" required>
                         <span class="icon is-small is-left">
-                            <i class="fa-solid fa-id-card-clip"></i>
+                            <i class="fa-solid fa-calendar-days"></i>
                         </span>
                     </p>
                 </div>
@@ -108,7 +108,7 @@
                     <p class="control has-icons-left">
                         <input class="input" type="date" placeholder="Date de fin : " id="DateFin" required>
                         <span class="icon is-small is-left">
-                            <i class="fa-solid fa-id-card-clip"></i>
+                            <i class="fa-solid fa-calendar-days"></i>
                         </span>
                     </p>
                 </div>
