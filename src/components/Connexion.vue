@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container is-fluid">
     <section class="hero is-primary">
       <div class="hero-body">
         <p class="title">
@@ -12,12 +12,12 @@
     </section>
   </div>
 
-  <div class="container">
+  <div class="container is-fluid">
     <section class="hero is-info">
       <br>
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Matricule" required>
+          <input class="input" type="text" placeholder="Matricule" id="matricule" required>
           <span class="icon is-small is-left">
             <i class="fa-solid fa-id-card-clip"></i>
           </span>
@@ -26,7 +26,7 @@
 
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" type="password" placeholder="Password" required>
+          <input class="input" type="password" placeholder="Password" id="password" required>
           <span class="icon is-small is-left">
             <i class="fas fa-lock"></i>
           </span>
@@ -62,20 +62,22 @@ export default {
       password: ''
     };
   },
-};  
 
-function verificationFormulaire() {
-    if (matricule == '') {
-      alert('Veuillez indiquer votre matricule')
+  methods: {
+    verificationFormulaire() {
+      if (matricule == '') {
+        alert('Veuillez indiquer votre matricule')
+      }
+      else if (mdp == '') {
+        alert('Veuillez indiquer votre mot de passe')
+      }
+      else {
+        alert('Connexion effectuée')
+      }
+      console.log('La fonction a été appelée');
     }
-    else if (mdp == '') {
-      alert('Veuillez indiquer votre mot de passe')
-    }
-    else {
-      alert('Connexion effectuée')
-    }
-    console.log('La fonction a été appelée');
   }
+};
 
 </script>
 
