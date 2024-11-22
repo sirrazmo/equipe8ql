@@ -1,11 +1,14 @@
 <template>
-
-  <div class="container is-fluid">
-    <section class="hero is-info">
+  <div class="has-background-black-ter" style="min-height: 95vh;">
+    <div class="container is-max-tablet">
+      <br>
+      <div class="container has-text-centered">
+        <h1 class="title is-center has-text-white">Connection</h1>
+      </div>
       <br>
       <div class="field">
         <p class="control has-icons-left">
-          <input class="input" type="text" placeholder="Matricule" id="matricule" required>
+          <input class="input" type="text" placeholder="Registration number" id="matricule" required>
           <span class="icon is-small is-left">
             <i class="fa-solid fa-id-card-clip"></i>
           </span>
@@ -25,16 +28,17 @@
           <div class="column is-narrow">
             <p class="control">
               <button class="button is-warning is-rounded is-center" onclick="verificationFormulaire">
-                Se connecter
+                Connect
               </button>
             </p>
             <br>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
+
 
 <script>
 
