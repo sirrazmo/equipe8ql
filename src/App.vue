@@ -26,9 +26,7 @@
           </a>
 
           <a class="navbar-item">
-            <li>
               <RouterLink to=/infoMateriel>Info utilisateur</RouterLink>
-            </li>
           </a>
         </div>
         <div class="navbar-end">
@@ -46,8 +44,16 @@
     <RouterView />
   </main>
 
-  <footer></footer>
+  <footer class="footer breadcrumb is-centered" aria-label="breadcrumbs">
+    <ul>
+      <li><RouterLink to="/legal">Legal</RouterLink></li>
+      <li><RouterLink to="/contact">Contact</RouterLink></li>
+      <li><RouterLink to="/copyrigth">Copyright</RouterLink></li>
+      <li><RouterLink to="/version">Version</RouterLink></li>
+      <li><RouterLink to="/about">About</RouterLink></li>
 
+    </ul>
+  </footer>
 
 
 
