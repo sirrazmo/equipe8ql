@@ -4,54 +4,52 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Telephone</th>
-                <th>Colonne3</th>
-                <th>Colonne4</th>
-                <th>Colonne5</th>
+                <th>Type</th>
+                <th>Version</th>
+                <th>Numero</th>
+                <th>Photo</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Nom</th>
-                <th>Telephone</th>
-                <th>Colonne3</th>
-                <th>Colonne4</th>
-                <th>Colonne5</th>
-            </tr>
-        </tfoot>
         <tbody>
-            <tr>
-                <td>materiel1</td>
-                <td>0123456789</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
+            <tr v-for="materiel in materiels" :key="materiel.id">
+                <td>{{ materiel.Nom }}</td>
+                <td>{{ materiel.Type }}</td>
+                <td>{{ materiel.Version }}</td>
+                <td>{{ materiel.numero }}</td>
+                <td><img :src=materiel.photo_url /> </td>
+
             </tr>
-            <tr>
-                <td>materiel2</td>
-                <td>9876543210</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
-            <tr>
-                <td>materiel3</td>
-                <td>1111111111</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
-            <tr>
-                <td>materiel4</td>
-                <td>2222222222</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
+        
         </tbody>
     </table>
 
 
-
-
 </template>
+
+
+
+<script>
+import { ref, onMounted } from 'vue';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase.js';
+
+export default {
+  name: 'FirestoreExample',
+  setup() {
+    const materiels = ref([]);
+
+    const fetchMateriels = async () => {
+      const queryMaterielsSnapshot = await getDocs(collection(db, 'materiels'));
+      materiels.value = queryMaterielsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    };
+
+    onMounted(() => {
+      fetchMateriels();
+    });
+
+    return {
+      materiels,
+    };
+  },
+};
+</script>

@@ -44,12 +44,12 @@
     <RouterView />
   </main>
 
-  <footer class="footer breadcrumb is-centered has-background-black-bis" aria-label="breadcrumbs">
+  <footer class="footer breadcrumb has-bullet-separator is-centered has-background-black-bis" aria-label="breadcrumbs">
     <ul>
       <li><RouterLink to="/legal">Legal</RouterLink></li>
       <li><RouterLink to="/contact">Contact</RouterLink></li>
-      <li><RouterLink to="/copyrigth">Copyright</RouterLink></li>
-      <li><RouterLink to="/version">Version</RouterLink></li>
+      <li>‎ ‎ ‎  © 2024 Polytech Tours ‎ ‎ ‎ </li> <!-- ‎  permet de créer un caractère spécial vide (pour mettre de l'espace)-->
+      <li>‎ ‎ ‎ Version 1.0 ‎ ‎ ‎ </li>
       <li><RouterLink to="/about">About</RouterLink></li>
 
     </ul>
