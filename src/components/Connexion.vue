@@ -23,17 +23,13 @@
           </span>
         </p>
       </div>
-      <div class="field">
-        <div class="columns is-centered">
-          <div class="column is-narrow">
-            <p class="control">
-              <button class="button is-warning is-rounded is-center" onclick="verificationFormulaire">
-                Connect
-              </button>
-            </p>
-            <br>
-          </div>
-        </div>
+      <div class="field columns is-centered column is-narrow">
+        <p class="control">
+          <button class="button is-warning is-rounded is-center" onclick="verificationFormulaire">
+            Connect
+          </button>
+        </p>
+        <br>
       </div>
     </div>
   </div>
