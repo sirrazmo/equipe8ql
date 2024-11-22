@@ -13,9 +13,10 @@
     </nav>
   </header>
   <main>
-    <RouterView />
+    <RouterView/>
   </main>
   <footer>
+
   </footer>
 
 
