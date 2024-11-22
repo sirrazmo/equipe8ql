@@ -1,9 +1,22 @@
 <template>
-  <nav>
-    <RouterLink to="/">Gestion materiel</RouterLink>
-    <RouterLink to="/connection">connection</RouterLink>
+  <header>
+    <nav class="breadcrumb is-large has-bullet-separator" aria-label="breadcrumbs">
+      <div class="is-flex is-justify-content-space-between is-align-items-center" style="width: 100%;">
+        <ul class="is-flex">
+          <li><RouterLink to="/">Equipments</RouterLink></li>
+          <li><RouterLink to="/utilisateur">Users</RouterLink></li>
+        </ul>
+        <ul>
+          <li><RouterLink to="/connection">Login</RouterLink></li>
+        </ul>
+      </div>
     </nav>
-    <main>
-      <RouterView/>
-    </main>
+  </header>
+  <main>
+    <RouterView />
+  </main>
 </template>
+
+<style>
+
+</style>
