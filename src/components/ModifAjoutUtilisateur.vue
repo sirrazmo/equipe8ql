@@ -22,7 +22,7 @@
                             <i class="fa-solid fa-user"></i>
                         </span>
                     </p>
-
+                    <a></a>
                     <br>
 
                     <p>Prénom :</p>
@@ -39,7 +39,7 @@
                     <label for="administrator">Administrateur</label>
                     <br>
                     <input type="radio" id="utilisateur" name="admin" v-model="choix">
-                    <label for="administrator">utilisateur</label>
+                    <label for="administrator">Utilisateur</label>
                 </div>
 
 
