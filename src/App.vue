@@ -25,6 +25,11 @@
             <RouterLink to="/creation-materiel">Create a material</RouterLink>
           </a>
 
+          <a class="navbar-item">
+            <li>
+              <RouterLink to=/ModifAjoutUtilisateur>Info utilisateur</RouterLink>
+            </li>
+          </a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
