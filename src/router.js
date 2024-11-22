@@ -11,7 +11,7 @@ const routes = [
   { path: '/connection', component: ConnectionView },
   {path: '/utilisateur', component: AffichageUtilisateurView},
   {path: '/creation-materiel', component: CreationMateriel},
-  {path: '/ModifAjoutUtilisateur', component : ModifAjoutUtilisateur}
+  {path: '/infoMateriel', component : ModifAjoutUtilisateur}
 ]
 
 const router = createRouter({

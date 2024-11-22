@@ -27,7 +27,7 @@
 
           <a class="navbar-item">
             <li>
-              <RouterLink to=/ModifAjoutUtilisateur>Info utilisateur</RouterLink>
+              <RouterLink to=/infoMateriel>Info utilisateur</RouterLink>
             </li>
           </a>
         </div>
