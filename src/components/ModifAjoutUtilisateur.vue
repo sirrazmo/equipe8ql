@@ -1,13 +1,13 @@
 <template>
-
+    <div class="has-background-black-ter" style="min-height: 73vh;">
     <div class="container is-fluid">
         <section class="is-info">
             <br>
             <div class="columns is-mobile">
                 <div class="column">
-                    <p>Nom :</p>
+                    <p>Last name</p>
                     <p class="control has-icons-left">
-                        <input class="input" type="text" placeholder="Nom : " id="Nom" required>
+                        <input class="input" type="text" placeholder="Last name" id="Nom" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-user"></i>
                         </span>
@@ -15,9 +15,9 @@
                     <a></a>
                     <br>
 
-                    <p>Prénom :</p>
+                    <p>First name</p>
                     <p class="control has-icons-left">
-                        <input class="input" type="text" placeholder="Prénom : " id="Prenom" required>
+                        <input class="input" type="text" placeholder="First name" id="Prenom" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-user"></i>
                         </span>
@@ -26,18 +26,18 @@
                     <br><br>
 
                     <input type="radio" id="administrateur" name="admin" v-model="choix">
-                    <label for="administrator">Administrateur</label>
+                    <label for="administrator">Administrator</label>
                     <br>
                     <input type="radio" id="utilisateur" name="admin" v-model="choix">
-                    <label for="administrator">Utilisateur</label>
+                    <label for="administrator">User</label>
                 </div>
 
 
 
                 <div class="column">
-                    <p>Email : </p>
+                    <p>Email</p>
                     <p class="control has-icons-left">
-                        <input class="input" type="email" placeholder="Mail : " id="Email" required>
+                        <input class="input" type="email" placeholder="Mail" id="Email" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-at"></i>
                         </span>
@@ -45,9 +45,9 @@
 
                     <br>
 
-                    <p>Matricule :</p>
+                    <p>Registration number</p>
                     <p class="control has-icons-left">
-                        <input class="input" type="text" placeholder="Matricule : " id="Matricule" required>
+                        <input class="input" type="text" placeholder="Registration number" id="Matricule" required>
                         <span class="icon is-small is-left">
                             <i class="fa-solid fa-id-card-clip"></i>
                         </span>
@@ -55,7 +55,7 @@
 
                     <br>
 
-                    <p>Mot de passe :</p>
+                    <p>Password</p>
                     <p class="control has-icons-left">
                         <input class="input" type="password" placeholder="Password" id="MotDePasse" required>
                         <span class="icon is-small is-left">
@@ -68,7 +68,7 @@
             <div class="columns is-centered">
                 <div class="column is-narrow">
                     <button class="button is-warning is-rounded is-center" @click="Valider">
-                        Valider
+                        Submit
                     </button>
                 </div>
             </div>
@@ -77,7 +77,7 @@
     </div>
 
 
-
+</div>
 
 </template>
 

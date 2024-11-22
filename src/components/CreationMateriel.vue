@@ -1,20 +1,16 @@
 <template>
+<div class="has-background-black-ter" style="min-height: 73vh;">
 <div class="container">
-    <section class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          Création d'un matériel
-        </p>
-      </div>
-    </section>
+    <p class="title" style="padding-top: 1%; padding-bottom: 1%;">
+      Creation of material
+    </p>
 </div>
 
 <div class="container">
-  <section class="hero is-info">
     <div class="field">
-      <label class="label">Nom</label>
+      <label class="label">Name</label>
       <div class="control">
-        <input class="input" type="text" name="nom" placeholder="Nom" required>
+        <input class="input" type="text" name="nom" placeholder="Name" required>
       </div>
     </div>
 
@@ -26,13 +22,13 @@
 </div>
 
 <div class="field">
-  <label class="label">Ref</label>
+  <label class="label">Reference</label>
   <div class="control">
     <input class="input" type="text" name="reference" placeholder="Ref : AN185 / AP748 / XX784" required>
   </div>
 </div>
 
-<label class="label">Image</label>
+<label class="label">Picture</label>
 <div class="file is-primary"> 
   <label class="file-label">
     <input class="file-input" type="file" name="image" @change="selectionFichier"/>
@@ -40,14 +36,14 @@
       <span class="file-icon">
         <i class="fas fa-upload"></i>
       </span>
-      <span class="file-label">Choisir une image...</span>
+      <span class="file-label">Choose a Picture...</span>
     </span>
     <span v-if="file" class="file-name">{{ file.name }}</span>
   </label>
 </div>
 
 <div class="field">
-  <label class="label">N° de téléphone</label>
+  <label class="label">Phone number</label>
   <div class="control">
     <input class="input" type="tel" name="telephone" placeholder="ex : 0678145936" required>
   </div>
@@ -57,15 +53,15 @@
           <div class="column is-narrow">
             <p class="control">
               <button class="button is-warning is-rounded is-center" @click="verificationMateriel(nom, version,reference,telephone)">
-                Créer le matériel
+                Create the material
               </button>
             </p>
             <br>
           </div>
         </div>
       </div>
-        </section>
       </div>
+    </div>
 </template>
 
 <script>

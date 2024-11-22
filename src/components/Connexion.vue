@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-black-ter" style="min-height: 95vh;">
+  <div class="has-background-black-ter" style="min-height: 73vh;">
     <div class="container is-max-tablet">
       <br>
       <div class="container has-text-centered">
