@@ -1,17 +1,6 @@
 <template>
 
-    <div class="container is-fluid">
-        <section class="hero is-primary">
-            <div class="hero-body">
-                <p class="title">
-                    Information Materiel
-                </p>
-                <p class="subtitle">
-                    Information Materiel
-                </p>
-            </div>
-        </section>
-    </div>
+    
     <div class="container is-fluid">
         <section class="hero is-info">
             <div class="columns is-mobile">

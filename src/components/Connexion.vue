@@ -1,16 +1,4 @@
 <template>
-  <div class="container is-fluid">
-    <section class="hero is-primary">
-      <div class="hero-body">
-        <p class="title">
-          Bienvenue sur votre appli
-        </p>
-        <p class="subtitle">
-          Votre application de réservation
-        </p>
-      </div>
-    </section>
-  </div>
 
   <div class="container is-fluid">
     <section class="hero is-info">

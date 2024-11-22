@@ -1,16 +1,6 @@
 <template>
 
     <div class="container is-fluid">
-        <section class="hero is-primary">
-            <div class="hero-body">
-                <p class="title">
-                    Modification et ajout d'utilisateur
-                </p>
-                <p class="subtitle">
-                    Modification et ajout d'utilisateur
-                </p>
-            </div>
-        </section>
         <section class="hero is-info">
             <br>
             <div class="columns is-mobile">
