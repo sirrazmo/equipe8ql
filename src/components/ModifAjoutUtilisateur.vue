@@ -1,7 +1,7 @@
 <template>
 
     <div class="container is-fluid">
-        <section class="hero is-info">
+        <section class="is-info">
             <br>
             <div class="columns is-mobile">
                 <div class="column">

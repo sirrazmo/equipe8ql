@@ -1,6 +1,6 @@
 <template>
   <header>
-    <nav class="navbar has-background-black-bis" role="navigation" aria-label="main navigation">
+    <nav class="navbar has-background-black-bis " role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -13,7 +13,7 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
+          <a class="navbar-item ">
             <RouterLink to="/">Equipments</RouterLink>
           </a>
 
@@ -44,7 +44,7 @@
     <RouterView />
   </main>
 
-  <footer class="footer breadcrumb is-centered" aria-label="breadcrumbs">
+  <footer class="footer breadcrumb is-centered has-background-black-bis" aria-label="breadcrumbs">
     <ul>
       <li><RouterLink to="/legal">Legal</RouterLink></li>
       <li><RouterLink to="/contact">Contact</RouterLink></li>
