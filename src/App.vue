@@ -5,6 +5,7 @@
         <ul class="is-flex">
           <li><RouterLink to="/">Equipments</RouterLink></li>
           <li><RouterLink to="/utilisateur">Users</RouterLink></li>
+          <li><RouterLink to="//creation-materiel">Create a material</RouterLink></li>
         </ul>
         <ul>
           <li><RouterLink to="/connection">Login</RouterLink></li>
