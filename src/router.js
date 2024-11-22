@@ -1,10 +1,10 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 
-import HomeView from './components/HelloWorld.vue'
+import AffichageMaterielView from './components/AffichageMateriel.vue'
 import ConnectionView from './components/Connexion.vue'
 
 const routes = [
-  { path: '/', component: HomeView },
+  { path: '/', component: AffichageMaterielView },
   { path: '/connection', component: ConnectionView },
 ]
 

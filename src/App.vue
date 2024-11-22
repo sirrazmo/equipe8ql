@@ -15,6 +15,12 @@
   <main>
     <RouterView />
   </main>
+  <footer>
+  </footer>
+
+
+
+
 </template>
 
 <style>
