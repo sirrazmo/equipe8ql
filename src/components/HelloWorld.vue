@@ -28,6 +28,7 @@
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
   </div>
+  <button @click="goToConnection">Go to Connection</button>
 </template>
 
 <script>
@@ -35,6 +36,11 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods:{
+    goToConnection(){
+      this.$router.push('/connection')
+    }
   }
 }
 </script>
