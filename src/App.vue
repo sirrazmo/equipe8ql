@@ -1,30 +1,74 @@
 <template>
   <header>
-    <nav class="breadcrumb is-large has-bullet-separator" aria-label="breadcrumbs">
-      <div class="is-flex is-justify-content-space-between is-align-items-center" style="width: 100%;">
-        <ul class="is-flex">
-          <li><RouterLink to="/">Equipments</RouterLink></li>
-          <li><RouterLink to="/utilisateur">Users</RouterLink></li>
-          <li><RouterLink to="//creation-materiel">Create a material</RouterLink></li>
-        </ul>
-        <ul>
-          <li><RouterLink to="/connection">Login</RouterLink></li>
-        </ul>
+    <nav class="navbar has-background-black-bis" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item">
+            <RouterLink to="/">Equipments</RouterLink>
+          </a>
+
+          <a class="navbar-item">
+            <RouterLink to="/utilisateur">Users</RouterLink>
+          </a>
+
+          <a class="navbar-item">
+            <RouterLink to="/creation-materiel">Create a material</RouterLink>
+          </a>
+
+        </div>
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <a class="button is-dark">
+              <RouterLink to="/connection">Login</RouterLink>
+            </a>
+          </div>
+        </div>
       </div>
     </nav>
   </header>
-  <main>
-    <RouterView/>
-  </main>
-  <footer>
 
-  </footer>
+  <main>
+    <RouterView />
+  </main>
+
+  <footer></footer>
 
 
 
 
 </template>
 
-<style>
+<!-- Ici le code pour que le menu burger marche-->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
 
-</style>
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Add a click event on each of them
+  $navbarBurgers.forEach(el => {
+    el.addEventListener('click', () => {
+
+      // Get the target from the "data-target" attribute
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
+
+      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
+
+    });
+  });
+
+});
+</script>
