@@ -5,13 +5,17 @@ import AffichageUtilisateurView from './components/AffichageUtilisateur.vue'
 import ConnectionView from './components/Connexion.vue'
 import CreationMateriel from './components/CreationMateriel.vue'
 import ModifAjoutUtilisateur from './components/ModifAjoutUtilisateur.vue'
+import LegalView from './components/LegalPage.vue'
+import Contact from './components/ContactPage.vue'
 
 const routes = [
   { path: '/', component: AffichageMaterielView },
   { path: '/connection', component: ConnectionView },
   {path: '/utilisateur', component: AffichageUtilisateurView},
   {path: '/creation-materiel', component: CreationMateriel},
-  {path: '/infoMateriel', component : ModifAjoutUtilisateur}
+  {path: '/infoMateriel', component : ModifAjoutUtilisateur},
+  {path: '/legalPage', component: LegalView},
+  {path: '/contact', component:Contact}
 ]
 
 const router = createRouter({

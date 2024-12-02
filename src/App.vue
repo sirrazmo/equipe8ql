@@ -46,7 +46,7 @@
 
   <footer class="footer breadcrumb has-bullet-separator is-centered has-background-black-bis" aria-label="breadcrumbs">
     <ul>
-      <li><RouterLink to="/legal">Legal</RouterLink></li>
+      <li><RouterLink to="/legalPage">Legal</RouterLink></li>
       <li><RouterLink to="/contact">Contact</RouterLink></li>
       <li>‎ ‎ ‎  © 2024 Polytech Tours ‎ ‎ ‎ </li> <!-- ‎  permet de créer un caractère spécial vide (pour mettre de l'espace)-->
       <li>‎ ‎ ‎ Version 1.0 ‎ ‎ ‎ </li>
