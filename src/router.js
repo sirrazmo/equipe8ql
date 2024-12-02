@@ -7,6 +7,7 @@ import CreationMateriel from './components/CreationMateriel.vue'
 import ModifAjoutUtilisateur from './components/ModifAjoutUtilisateur.vue'
 import LegalView from './components/LegalPage.vue'
 import Contact from './components/ContactPage.vue'
+import AboutPage from './components/AboutPage.vue'
 
 const routes = [
   { path: '/', component: AffichageMaterielView },
@@ -15,7 +16,8 @@ const routes = [
   {path: '/creation-materiel', component: CreationMateriel},
   {path: '/infoMateriel', component : ModifAjoutUtilisateur},
   {path: '/legalPage', component: LegalView},
-  {path: '/contact', component:Contact}
+  {path: '/contact', component:Contact},
+  {path: '/about', component:AboutPage}
 ]
 
 const router = createRouter({
