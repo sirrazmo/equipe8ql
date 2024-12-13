@@ -15,7 +15,7 @@
                 <td>{{ materiel.Nom }}</td>
                 <td>{{ materiel.Type }}</td>
                 <td>{{ materiel.Version }}</td>
-                <td>{{ materiel.numero }}</td>
+                <td>{{ materiel.Numero }}</td>
                 <td><img :src=materiel.photo_url /></td>
             </tr>
         
