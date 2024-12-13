@@ -5,8 +5,9 @@
           Creation of material
         </p>
     </div>
+
+    <button @click="creerMateriel()"> CREER</button>
   
-    <form @submit="creerMateriel" action="" method="post">
       <div class="container">
       <div class="field">
         <label class="label">Name</label>
@@ -16,6 +17,14 @@
         <p class="help is-danger" v-if="nameError">{{ nameError }}</p>
       </div>
   
+      <div class="field">
+        <label class="label">Type</label>
+        <div class="control">
+          <input class="input" type="text" v-model="type" placeholder="type" required>
+        </div>
+        <p class="help is-danger" v-if="typeError">{{ typeError }}</p>
+      </div>
+
   <div class="field">
     <label class="label">Version</label>
     <div class="control">
@@ -58,7 +67,7 @@
           <div class="columns is-centered">
             <div class="column is-narrow">
               <p class="control">
-                <button class="button is-warning is-rounded is-center" type="submit">
+                <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel()">
                   Create the material
                 </button>
               </p>
@@ -67,7 +76,6 @@
           </div>
         </div>
         </div>
-    </form>
   
   </div>
   </template>
@@ -96,23 +104,16 @@
       methods: {
 
         async creerMateriel()  {
-          if (this.verificationMateriel(this.nom,this.version, this.reference, this.telephone)) {
-         
-            try{
-              const docRef = await addDoc(collection(db,"materiels"), {
-              Nom: this.nom,
-              Type:"telephone",
-              Version:this.version,
-              numero: parseInt(this.telephone),
-              photo_url:this.imagePath
-              });
 
-              console.log("Document written with ID: ", docRef.id);
-            } catch(e) {
-              console.error("Error adding document: ", e);
-            }
-         
-          }
+          const docRef = await addDoc(collection(db, "materiels"), {
+            Nom: this.nom,
+            Type: this.type,
+            Version: this.version,
+            Reference: this.reference,
+            Numero: parseInt(this.telephone),
+          });
+          console.log("Document written with ID: ", docRef.id);
+
 
         },
 
