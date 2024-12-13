@@ -8,6 +8,7 @@
                 <th>Version</th>
                 <th>Numero</th>
                 <th>Photo</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -17,6 +18,7 @@
                 <td>{{ materiel.Version }}</td>
                 <td>{{ materiel.Numero }}</td>
                 <td><img :src=materiel.photo_url /></td>
+                <td><button class="button is-primary is-rounded is-center" @click="getInfoMat">Consulter</button></td>
             </tr>
         
         </tbody>
@@ -31,6 +33,7 @@
 import { ref, onMounted } from 'vue';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase.js';
+import router from '@/router.js';
 
 export default {
   name: 'FirestoreExample',
@@ -50,5 +53,10 @@ export default {
       materiels,
     };
   },
+  methods: {
+    getInfoMat() {
+      router.push("/info-materiel");
+    }
+  }
 };
 </script>

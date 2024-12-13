@@ -26,7 +26,7 @@
           </a>
 
           <a class="navbar-item">
-              <RouterLink to=/infoMateriel>Info utilisateur</RouterLink>
+              <RouterLink to=/info-utilisateur>Info utilisateur</RouterLink>
           </a>
         </div>
         <div class="navbar-end">
