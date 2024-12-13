@@ -5,15 +5,15 @@ import { getAuth } from 'firebase/auth';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDk1GEjfEUcG5SXAwX4iL0uCuqqgL_dfgM",
     authDomain: "equipe8ql.firebaseapp.com",
+    databaseURL: "https://equipe8ql-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "equipe8ql",
-    storageBucket: "equipe8ql.appspot.com",
+    storageBucket: "equipe8ql.firebasestorage.app",
     messagingSenderId: "1036761644513",
     appId: "1:1036761644513:web:821babac5399047c38a6a0"
-};
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
