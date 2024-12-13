@@ -1,5 +1,5 @@
 <template>
-  <div class="has-background-black-ter" style="min-height: 73vh;">
+  <div class="has-background-color" style="min-height: 73vh;">
     <div class="container">
         <p class="title" style="padding-top: 1%; padding-bottom: 1%;">
           Creation of material
