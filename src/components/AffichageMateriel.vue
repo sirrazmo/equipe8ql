@@ -1,5 +1,5 @@
 <template>
-
+  <div class="has-background-color" style="min-height: 73vh;">
     <table class="table">
         <thead>
             <tr>
@@ -21,7 +21,7 @@
         
         </tbody>
     </table>
-
+  </div>
 
 </template>
 

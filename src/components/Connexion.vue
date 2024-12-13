@@ -1,9 +1,9 @@
 <template>
-  <div class="has-background-black-ter" style="min-height: 73vh;">
+  <div class="has-background-color" style="min-height: 73vh;">
     <div class="container is-max-tablet">
       <br>
       <div class="container has-text-centered">
-        <h1 class="title is-center has-text-white">Connection</h1>
+        <h1 class="title is-center has-text-color">Connection</h1>
       </div>
       <br>
       <div class="field">

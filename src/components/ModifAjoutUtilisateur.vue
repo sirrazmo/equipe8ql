@@ -1,5 +1,5 @@
 <template>
-    <div class="has-background-black-ter" style="min-height: 73vh;">
+    <div class="has-background-color" style="min-height: 73vh;">
     <div class="container is-fluid">
         <section class="is-info">
             <br>
