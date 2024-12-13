@@ -5,8 +5,6 @@
           Creation of material
         </p>
     </div>
-
-    <button @click="creerMateriel()"> CREER</button>
   
       <div class="container">
       <div class="field">
@@ -83,6 +81,8 @@
   <script>
   import { collection, addDoc } from 'firebase/firestore';
   import { db} from '../firebase.js';
+  import router from '@/router.js';
+  
 
 
   export default {
@@ -113,6 +113,8 @@
             Numero: parseInt(this.telephone),
           });
           console.log("Document written with ID: ", docRef.id);
+          alert("Ajout du matériel réussi");
+          router.push("/");
 
 
         },
