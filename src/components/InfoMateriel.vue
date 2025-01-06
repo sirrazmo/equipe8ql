@@ -113,7 +113,23 @@
 </template>
 
 <script>
+import router from '@/router.js';
+import { getAuth } from 'firebase/auth';
+
 export default {
+    async mounted() {
+        const auth = getAuth();
+        if (!auth.currentUser) {
+            alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
+            router.push("/");
+        }
+        else {
+            if (auth.currentUser.email != "admin@admin.com") {
+                alert("Vous n'êtes pas autorisé à accéder à cette page.");
+                router.push("/");
+            }
+        }
+    },
     /* eslint-disable */
     name: 'InfoMateriel',
     data() {
