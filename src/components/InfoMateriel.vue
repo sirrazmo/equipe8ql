@@ -1,8 +1,7 @@
 <template>
 
-    
-    <div class="container is-fluid">
-        <section class="hero is-info">
+    <div class="has-background-color has-text-color" style="min-height: 73vh;">
+        <div class="container is-fluid">
             <div class="columns is-mobile">
                 <div class="column">
                     <div class="container is-fluid">
@@ -48,10 +47,8 @@
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
-    <div class="container is-fluid">
-        <section class="hero is-info">
+        </div>
+        <div class="container is-fluid has-color-background">
             <div class="columns ">
                 <div class="column is-offset-one-fifth">
                     <div class="container is-fluid">
@@ -75,11 +72,9 @@
                     </button>
                 </div>
             </div>
-        </section>
-    </div>
-    <br>
-    <div class="container is-fluid">
-        <section class="hero is-info">
+        </div>
+        <br>
+        <div class="container is-fluid">
             <p class="is-size-3 has-text-centered">Réservation : </p>
             <div class="columns is-mobile">
                 <div class="column">
@@ -112,10 +107,9 @@
                 </div>
             </div>
             <br>
-        </section>
+        </div>
     </div>
 
-    
 </template>
 
 <script>
