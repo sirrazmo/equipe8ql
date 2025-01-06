@@ -58,6 +58,33 @@
 
 
 </template>
+<!-- Ici le code pour que le menu burger marche-->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+// Get all "navbar-burger" elements
+const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+// Add a click event on each of them
+$navbarBurgers.forEach(el => {
+  el.addEventListener('click', () => {
+
+    // Get the target from the "data-target" attribute
+    const target = el.dataset.target;
+    const $target = document.getElementById(target);
+
+    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+    el.classList.toggle('is-active');
+    $target.classList.toggle('is-active');
+
+    // Add a class to the body for reduced state
+    document.body.classList.toggle('navbar-reduced');
+  });
+});
+
+});
+
+</script>
 
 
 <style scoped>
@@ -82,6 +109,9 @@ a:hover{
   color: black;
 }
 
+.navbar-reduced .navbar a{
+  color: black;
+}
 
 /* Couleurs pour le mode sombre */
 @media (prefers-color-scheme: dark) {
@@ -102,31 +132,12 @@ a:hover{
   background-color: hsl(0, 0%, 20%);
 }
 
+.navbar-reduced .navbar a{
+  color: white;
+}
+
 }
 </style>
 
 
-<!-- Ici le code pour que le menu burger marche-->
-<script>
-document.addEventListener('DOMContentLoaded', () => {
 
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-  // Add a click event on each of them
-  $navbarBurgers.forEach(el => {
-    el.addEventListener('click', () => {
-
-      // Get the target from the "data-target" attribute
-      const target = el.dataset.target;
-      const $target = document.getElementById(target);
-
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      el.classList.toggle('is-active');
-      $target.classList.toggle('is-active');
-
-    });
-  });
-
-});
-</script>
