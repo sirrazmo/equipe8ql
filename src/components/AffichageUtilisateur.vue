@@ -4,54 +4,53 @@
         <thead>
             <tr>
                 <th>Nom</th>
-                <th>Telephone</th>
-                <th>Colonne3</th>
-                <th>Colonne4</th>
-                <th>Colonne5</th>
+                <th>Prénom</th>
+                <th>Administrateur</th>
+                <th>email</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>Nom</th>
-                <th>Telephone</th>
-                <th>Colonne3</th>
-                <th>Colonne4</th>
-                <th>Colonne5</th>
-            </tr>
-        </tfoot>
         <tbody>
-            <tr>
-                <td>Utilisateur1</td>
-                <td>0123456789</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
-            <tr>
-                <td>Utilisateur2</td>
-                <td>9876543210</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
-            <tr>
-                <td>Utilisateur3</td>
-                <td>1111111111</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
-            </tr>
-            <tr>
-                <td>Utilisateur4</td>
-                <td>2222222222</td>
-                <td>col3</td>
-                <td>col4</td>
-                <td>col5</td>
+            <tr v-for="utilisateurs in utilisateurs" :key="utilisateurs.id">
+                <td>{{ utilisateurs.Prénom }}</td>
+                <td>{{ utilisateurs.Nom }}</td>
+                <td>{{ utilisateurs.admin }}</td>
+                <td>{{ utilisateurs.email }}</td>
+                <td><button class="button is-primary is-rounded is-center" @click="getInfoUtilisateurs">Consulter</button></td>
             </tr>
         </tbody>
     </table>
 </div>
 
-
-
 </template>
+
+<script>
+import { ref, onMounted } from 'vue';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase.js';
+import router from '@/router.js';
+
+export default {
+  name: 'FirestoreExample',
+  setup() {
+    const utilisateurs = ref([]);
+
+    const fetchUtilisateurs = async () => {
+      const queryUtilisateursSnapshot = await getDocs(collection(db, 'utilisateurs'));
+      utilisateurs.value = queryUtilisateursSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    };
+
+    onMounted(() => {
+      fetchUtilisateurs();
+    });
+
+    return {
+        utilisateurs,
+    };
+  },
+  methods: {
+    getInfoUtilisateurs() {
+      router.push("/info-utilisateur");
+    }
+  }
+};
+</script>
