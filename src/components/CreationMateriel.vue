@@ -66,7 +66,7 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <p class="control">
-              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel()">
+              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference, telephone))">
                 Create the material
               </button>
             </p>
@@ -119,19 +119,19 @@ export default {
   methods: {
 
 
-    async creerMateriel() {
-
-      const docRef = await addDoc(collection(db, "materiels"), {
-        Nom: this.nom,
-        Type: this.type,
-        Version: this.version,
-        Reference: this.reference,
-        Numero: parseInt(this.telephone),
-      });
-      console.log("Document written with ID: ", docRef.id);
-      alert("Ajout du matériel réussi");
-      router.push("/");
-
+    async creerMateriel(verif) {
+      if (verif){
+        const docRef = await addDoc(collection(db, "materiels"), {
+          Nom: this.nom,
+          Type: this.type,
+          Version: this.version,
+          Reference: this.reference,
+          Numero: parseInt(this.telephone),
+        });
+        console.log("Document written with ID: ", docRef.id);
+        alert("Ajout du matériel réussi");
+        router.push("/");
+      }
 
     },
 
