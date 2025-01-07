@@ -28,9 +28,24 @@ import { ref, onMounted } from 'vue';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import router from '@/router.js';
-
+import { getAuth } from 'firebase/auth';
 export default {
   name: 'FirestoreExample',
+
+  async mounted() {
+    const auth = getAuth();
+    if (!auth.currentUser) {
+      alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
+      router.push("/");
+    }
+    else {
+      if (auth.currentUser.email != "admin@admin.com") {
+        alert("Vous n'êtes pas autorisé à accéder à cette page.");
+        router.push("/");
+      }
+    }
+  },
+
   setup() {
     const utilisateurs = ref([]);
 
