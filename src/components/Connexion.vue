@@ -41,6 +41,17 @@
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import router from '@/router.js';
 export default {
+
+  async mounted() {
+    const auth = getAuth();
+    if (auth.currentUser) {
+      auth.signOut();
+      alert("Déconnexion effetuée !");
+      document.getElementById("CO").innerText = "Connexion";
+      router.push("/");
+    }
+  },
+
   /* eslint-disable */
   name: 'connexion',
   data() {
@@ -50,6 +61,10 @@ export default {
     };
   },
   methods: {
+    
+
+
+
     async connexion() {
       const auth = getAuth();
       setPersistence(auth, browserSessionPersistence).then(() => {
@@ -64,6 +79,7 @@ export default {
           const errorCode = error.code;
           const errorMessage = error.message;
         });
+      document.getElementById("CO").innerText = "Déconnexion";
       router.push("/");
     }
   }

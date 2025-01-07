@@ -32,7 +32,7 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <a class="button is-dark">
-              <RouterLink to="/connection">Login</RouterLink>
+              <RouterLink id="CO" to="/connection">Connexion</RouterLink>
             </a>
           </div>
         </div>
@@ -54,12 +54,10 @@
 
     </ul>
   </footer>
-
-
-
 </template>
 <!-- Ici le code pour que le menu burger marche-->
 <script>
+
 document.addEventListener('DOMContentLoaded', () => {
 
 // Get all "navbar-burger" elements
@@ -83,7 +81,6 @@ $navbarBurgers.forEach(el => {
 });
 
 });
-
 </script>
 
 
