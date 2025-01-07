@@ -48,6 +48,7 @@ export default {
       auth.signOut();
       alert("Déconnexion effetuée !");
       document.getElementById("CO").innerText = "Connexion";
+      document.getElementById("nomUser").innerText = "";
       router.push("/");
     }
   },
@@ -61,8 +62,15 @@ export default {
     };
   },
   methods: {
-    
 
+    recupererNom(chaine) {
+      const position = chaine.indexOf("@");
+      if (position !== -1) {
+        return chaine.substring(0, position);
+      } else {
+        return chaine; 
+      }
+    },
 
 
     async connexion() {
@@ -80,10 +88,12 @@ export default {
           const errorMessage = error.message;
         });
       document.getElementById("CO").innerText = "Déconnexion";
+      document.getElementById("nomUser").innerText = String(this.recupererNom(this.email));
       router.push("/");
     }
   }
 };
+
 
 
 </script>

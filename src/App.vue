@@ -14,19 +14,24 @@
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
           <a class="navbar-item ">
-            <RouterLink to="/">Equipments</RouterLink>
+            <RouterLink to="/">Equipements</RouterLink>
           </a>
 
           <a class="navbar-item">
-            <RouterLink to="/utilisateur">Users</RouterLink>
+            <RouterLink to="/utilisateur">Utilisateurs</RouterLink>
           </a>
 
           <a class="navbar-item">
-            <RouterLink to="/creation-materiel">Create a material</RouterLink>
+            <RouterLink to="/creation-materiel">Créer un matériel</RouterLink>
           </a>
 
         </div>
         <div class="navbar-end">
+
+          <a class="navbar-item">
+            <p id="nomUser"></p>
+          </a>
+
           <div class="navbar-item">
             <a class="button is-dark">
               <RouterLink id="CO" to="/connection">Connexion</RouterLink>
