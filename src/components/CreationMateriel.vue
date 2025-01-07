@@ -61,6 +61,7 @@
           <input class="input" type="tel" v-model="telephone" @keydown="checkDigit" placeholder="ex : 0678145936"
             required>
         </div>
+        <p class="help is-danger" v-if="telephoneError">{{ telephoneError }}</p>
       </div>
       <div class="field">
         <div class="columns is-centered">
@@ -110,7 +111,8 @@ export default {
       imagePath: "",
       nameError: "",
       versionError: "",
-      referenceError: ""
+      referenceError: "",
+      telephoneError: ""
     };
   },
 
@@ -130,30 +132,30 @@ export default {
         alert("Ajout du matériel réussi");
         router.push("/");
       }
-
     },
 
     verificationMateriel(nom, version, reference, telephone) {
-      const errors = [];
-
+      this.nameError = "";
+      this.versionError = "";
+      this.referenceError = "";
+      this.telephoneError = "";
       if (!nom || nom.length < 1 || nom.length > 30) {
-        errors.push("The name must be between 1 and 30 characters.");
+        this.nameError = "The name must be between 1 and 30 characters.";
+        return false;
       }
 
       if (!version || version.length < 3 || version.length > 15) {
-        errors.push("The version must be between 3 and 15 characters.");
+        this.versionError = "The version must be between 3 and 15 characters.";
+        return false;
       }
 
       if (!reference || !/^(AN|AP|XX)\d{3}$/.test(reference)) {
-        errors.push("The reference must start with AN, AP, or XX and be followed by 3 digits.");
+        this.referenceError = "The reference must start with AN, AP, or XX and be followed by 3 digits.";
+        return false;
       }
 
       if (!telephone || !/^\d{10}$/.test(telephone)) {
-        errors.push("The phone number must be 10 digits.");
-      }
-
-      if (errors.length > 0) {
-        alert(errors.join("\n"));
+        this.telephoneError = "The phone number must be 10 digits.";
         return false;
       }
 
