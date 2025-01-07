@@ -85,8 +85,6 @@ import { db } from '../firebase.js';
 import router from '@/router.js';
 import { getAuth } from 'firebase/auth';
 
-
-
 export default {
   async mounted() {
     const auth = getAuth();
