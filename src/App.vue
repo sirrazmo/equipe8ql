@@ -25,9 +25,6 @@
             <RouterLink to="/creation-materiel">Create a material</RouterLink>
           </a>
 
-          <a class="navbar-item">
-              <RouterLink to=/info-utilisateur>Info utilisateur</RouterLink>
-          </a>
         </div>
         <div class="navbar-end">
           <div class="navbar-item">
