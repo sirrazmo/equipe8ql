@@ -18,7 +18,7 @@
                 <td>{{ materiel.Version }}</td>
                 <td>{{ materiel.Numero }}</td>
                 <td><img :src=materiel.photo_url /></td>
-                <td><button class="button is-primary is-rounded is-center" @click="getInfoMat">Consulter</button></td>
+                <td><button class="button is-primary is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button></td>
             </tr>
         
         </tbody>
@@ -54,8 +54,8 @@ export default {
     };
   },
   methods: {
-    getInfoMat() {
-      router.push("/info-materiel");
+    getInfoMat(idMat) {
+      router.push({path:`/info-materiel/${idMat}`});
     }
   }
 };

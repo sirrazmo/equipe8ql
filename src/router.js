@@ -15,8 +15,10 @@ const routes = [
   { path: '/connection', component: ConnectionView },
   {path: '/utilisateur', component: AffichageUtilisateurView},
   {path: '/creation-materiel', component: CreationMateriel},
-  {path: '/info-utilisateur', component : ModifAjoutUtilisateur},
-  {path: '/info-materiel', component : InfoMateriel},
+  //{path: '/info-utilisateur', component : ModifAjoutUtilisateur},
+  {path: '/info-utilisateur/:id', component : ModifAjoutUtilisateur},
+  {path: '/info-materiel/:id', component : InfoMateriel},
+  //{path: '/info-materiel', component : InfoMateriel},
   {path: '/legalPage', component: LegalView},
   {path: '/contact', component:Contact},
   {path: '/about', component:AboutPage}

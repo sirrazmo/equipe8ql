@@ -7,7 +7,7 @@
                     <div class="column">
                         <p>Last name</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Last name" id="Nom" required>
+                            <input class="input" type="text" v-model="this.Nom" id="Nom" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-user"></i>
                             </span>
@@ -17,7 +17,7 @@
 
                         <p>First name</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="First name" id="Prenom" required>
+                            <input class="input" type="text" v-model="this.Prenom" id="Prenom" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-user"></i>
                             </span>
@@ -25,10 +25,10 @@
 
                         <br><br>
 
-                        <input type="radio" id="administrateur" name="admin" v-model="choix">
+                        <input type="radio" id="administrateur" name="admin" value="true" v-model="choix">
                         <label for="administrator">Administrator</label>
                         <br>
-                        <input type="radio" id="utilisateur" name="admin" v-model="choix">
+                        <input type="radio" id="utilisateur" name="admin" value="false" v-model="choix">
                         <label for="administrator">User</label>
                     </div>
 
@@ -37,7 +37,7 @@
                     <div class="column">
                         <p>Email</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="email" placeholder="Mail" id="Email" required>
+                            <input class="input" type="email" v-model="this.Email" id="Email" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-at"></i>
                             </span>
@@ -84,6 +84,8 @@
 <script>
 import router from '@/router.js';
 import { getAuth } from 'firebase/auth';
+import { db } from '../firebase.js';
+import { doc,getDoc } from 'firebase/firestore';
 
 export default {
     async mounted() {
@@ -112,7 +114,21 @@ export default {
         };
     },
 
+    created() {
+        this.getUtilisateurs();
+  },
+
     methods: {
+        async getUtilisateurs() {
+            const utlisateurRef = doc(db, "utilisateurs", this.$route.params.id)
+            const utilisateur = await getDoc(utlisateurRef);
+            
+            this.Nom = utilisateur.get("Nom");
+            this.Prenom = utilisateur.get("Prénom");
+            this.choix = utilisateur.get("admin");
+            this.Email = utilisateur.get("email");
+        },
+        
         Valider() {
             alert('Valider appeler')
         }

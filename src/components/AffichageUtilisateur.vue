@@ -15,7 +15,7 @@
                 <td>{{ utilisateurs.Nom }}</td>
                 <td>{{ utilisateurs.admin }}</td>
                 <td>{{ utilisateurs.email }}</td>
-                <td><button class="button is-primary is-rounded is-center" @click="getInfoUtilisateurs">Consulter</button></td>
+                <td><button class="button is-primary is-rounded is-center" @click="getInfoUtilisateurs(utilisateurs.id)">Consulter</button></td>
             </tr>
         </tbody>
     </table>
@@ -63,8 +63,9 @@ export default {
     };
   },
   methods: {
-    getInfoUtilisateurs() {
-      router.push("/info-utilisateur");
+    getInfoUtilisateurs(idUser) {
+      console.log(idUser);
+      router.push({path: `/info-utilisateur/${idUser}`});
     }
   }
 };
