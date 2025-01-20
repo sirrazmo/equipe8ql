@@ -51,22 +51,6 @@
         <img :src="imagePath" alt="Aperçu" width="200" />
       </div>
 
-      <!--
-      <label class="label">Picture</label>
-      <div class="file is-primary">
-        <label class="file-label">
-          <input class="file-input" type="file" name="image" @change="selectionFichier" />
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fas fa-upload"></i>
-            </span>
-            <span class="file-label">Choose a Picture...</span>
-          </span>
-          <span v-if="file" class="file-name">{{ file.name }}</span>
-        </label>
-      </div> -->
-
-
       <div class="field">
         <label class="label">Phone number</label>
         <div class="control">
@@ -80,7 +64,7 @@
           <div class="column is-narrow">
             <p class="control">
               <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference,imagePath, telephone))">
-                Create the material
+                Créer le matériel
               </button>
             </p>
             <br>
@@ -141,6 +125,7 @@ export default {
           Reference: this.reference,
           Photo_url: this.imagePath,
           Numero: parseInt(this.telephone),
+          RéserverPar:""
         });
         console.log("Document written with ID: ", docRef.id);
         alert("Ajout du matériel réussi");
