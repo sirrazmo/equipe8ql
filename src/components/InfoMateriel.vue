@@ -58,8 +58,7 @@
                         <div class="is-center">
                             <p class="is-center">Photo : </p>
                             <figure class="image is-128x128 is-center">
-                                <img
-                                    src="https://th.bing.com/th/id/OIP.wnawMCUfxxFji_IDaeq9DQHaGG?w=219&h=181&c=7&r=0&o=5&dpr=1.3&pid=1.7" />
+                                <img :src="this.image"/>
                             </figure>
                         </div>
                     </div>
@@ -129,6 +128,7 @@ export default {
             nom:"",
             version:"",
             numero:"",
+            image:"",
             reference:"",
         };
     },
@@ -146,6 +146,7 @@ export default {
             this.nom = materiel.get("Nom");
             this.version = materiel.get("Version");
             this.numero = materiel.get("Numero");
+            this.image = materiel.get("Photo_url");
             this.reference = materiel.get("Reference");
         },
 

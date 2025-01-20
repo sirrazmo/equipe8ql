@@ -39,7 +39,19 @@
         <p class="help is-danger" v-if="referenceError">{{ referenceError }}</p>
       </div>
 
+      <div class="field">
+        <label class="label">Picture</label>
+        <div class="control">
+          <input class="input" type="text" v-model="imagePath" placeholder="URL picture" required>
+        </div>
+        <p class="help is-danger" v-if="imageError">{{ imageError }}</p>
+      </div>
 
+      <div v-if="imagePath && !imageError">
+        <img :src="imagePath" alt="Aperçu" width="200" />
+      </div>
+
+      <!--
       <label class="label">Picture</label>
       <div class="file is-primary">
         <label class="file-label">
@@ -52,7 +64,7 @@
           </span>
           <span v-if="file" class="file-name">{{ file.name }}</span>
         </label>
-      </div>
+      </div> -->
 
 
       <div class="field">
@@ -67,7 +79,7 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <p class="control">
-              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference, telephone))">
+              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference,imagePath, telephone))">
                 Create the material
               </button>
             </p>
@@ -112,7 +124,8 @@ export default {
       nameError: "",
       versionError: "",
       referenceError: "",
-      telephoneError: ""
+      telephoneError: "",
+      imageError:""
     };
   },
 
@@ -126,6 +139,7 @@ export default {
           Type: this.type,
           Version: this.version,
           Reference: this.reference,
+          Photo_url: this.imagePath,
           Numero: parseInt(this.telephone),
         });
         console.log("Document written with ID: ", docRef.id);
@@ -134,10 +148,11 @@ export default {
       }
     },
 
-    verificationMateriel(nom, version, reference, telephone) {
+    verificationMateriel(nom, version, reference, imagePath, telephone) {
       this.nameError = "";
       this.versionError = "";
       this.referenceError = "";
+      this.imageError = "";
       this.telephoneError = "";
       if (!nom || nom.length < 1 || nom.length > 30) {
         this.nameError = "The name must be between 1 and 30 characters.";
@@ -153,6 +168,12 @@ export default {
         this.referenceError = "The reference must start with AN, AP, or XX and be followed by 3 digits.";
         return false;
       }
+
+      if (!imagePath || !/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp))$/.test(imagePath) ) {
+        this.imageError = "The url isn't valid";
+        return false;
+      }
+
 
       if (!telephone || !/^\d{10}$/.test(telephone)) {
         this.telephoneError = "The phone number must be 10 digits.";
