@@ -66,7 +66,7 @@
                 </div>
 
                 <div class="column">
-                    <p class="is-center" id="Reservation"></p>
+                    <p class="help is-info" id="Reservation"></p>
                     <br>
                     <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte">
                         Reserver
