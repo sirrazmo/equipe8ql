@@ -86,7 +86,7 @@
 </template>
 
 <script>
-
+ 
 import { db } from '../firebase.js';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
