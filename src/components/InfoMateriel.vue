@@ -117,8 +117,8 @@
 <script>
 
 import { db } from '../firebase.js';
-import { doc,getDoc } from 'firebase/firestore';
-
+import { doc,getDoc, deleteDoc} from 'firebase/firestore';
+import router from '@/router.js';
 export default {
     /* eslint-disable */
     name: 'InfoMateriel',
@@ -156,9 +156,10 @@ export default {
         modifier() {
             alert('Modifier appelé');
         },
-        supprimer() {
-            alert('Supprimer appelé');
-
+        async supprimer() {
+            await deleteDoc(doc(db, "materiels", this.$route.params.id));
+            alert('Matériel supprimé !');
+            router.push("/");
         }
     }
 };
