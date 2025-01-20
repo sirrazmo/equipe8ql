@@ -17,7 +17,11 @@
                 <td>{{ materiel.Type }}</td>
                 <td>{{ materiel.Version }}</td>
                 <td>{{ materiel.Numero }}</td>
-                <td><img :src=materiel.photo_url /></td>
+                <td>
+                  <figure class="image is-128x128 is-center">
+                    <img :src=materiel.Photo_url />
+                  </figure>
+                </td>
                 <td><button class="button is-primary is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button></td>
             </tr>
         
@@ -60,3 +64,12 @@ export default {
   }
 };
 </script>
+<style scoped>
+.image img {
+  max-width: 100%; 
+  max-height: 128px; 
+  object-fit: contain; 
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+</style>
