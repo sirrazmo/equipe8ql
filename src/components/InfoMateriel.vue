@@ -1,7 +1,7 @@
 <template>
 
     <div class="has-background-color has-text-color" style="min-height: 73vh;">
-        <div class="container is-fluid" >
+        <div class="container is-fluid">
             <div class="columns is-mobile">
                 <div class="column">
                     <div class="container is-fluid">
@@ -9,17 +9,18 @@
                         <p>Nom : </p>
                         <p class="control has-icons-left">
                             <input class="input" type="text" v-model="this.nom" id="Nom" :readonly="!roleAdmin">
-                             
+
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-id-card-clip"></i>
                             </span>
-                            
-                            
+
+
                         </p>
 
                         <p>Référence :</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" v-model="this.reference" id="Reference" :readonly="!roleAdmin">
+                            <input class="input" type="text" v-model="this.reference" id="Reference"
+                                :readonly="!roleAdmin">
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-barcode"></i>
                             </span>
@@ -58,7 +59,7 @@
                         <div class="is-center">
                             <p class="is-center">Photo : </p>
                             <figure class="image is-128x128 is-center">
-                                <img :src="this.image"/>
+                                <img :src="this.image" />
                             </figure>
                         </div>
                     </div>
@@ -72,52 +73,22 @@
                     <button class="button is-warning is-rounded is-center" @click="supprimer" v-if="roleAdmin">
                         Supprimer
                     </button>
+                    <br> <br>
+                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte">
+                        Reserver
+                    </button>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="container is-fluid">
-            <p class="is-size-3 has-text-centered">Réservation : </p>
-            <div class="columns is-mobile">
-                <div class="column">
-                    <p>Date de début :</p>
-                    <p class="control has-icons-left">
-                        <input class="input" type="date" placeholder="Date de début : " id="DateDebut" required>
-                        <span class="icon is-small is-left">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </span>
-                    </p>
-                </div>
-
-                <div class="column">
-                    <p>Date de fin :</p>
-                    <p class="control has-icons-left">
-                        <input class="input" type="date" placeholder="Date de fin : " id="DateFin" required>
-                        <span class="icon is-small is-left">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="container is-fluid">
-                <div class="columns is-centered">
-                    <div class="column is-narrow">
-                        <button class="button is-warning is-rounded is-center" @click="reserver">
-                            Reserver
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <br>
         </div>
     </div>
+
 
 </template>
 
 <script>
 
 import { db } from '../firebase.js';
-import { doc,getDoc, deleteDoc} from 'firebase/firestore';
+import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import router from '@/router.js';
 export default {
@@ -126,37 +97,40 @@ export default {
 
     data() {
         return {
-            nom:"",
-            version:"",
-            numero:"",
-            image:"",
-            reference:"",
+            nom: "",
+            version: "",
+            numero: "",
+            image: "",
+            reference: "",
             roleAdmin: true,
         };
     },
 
     async mounted() {
         const auth = getAuth();
+        this.connecte = true
         if (!auth.currentUser) {
             this.roleAdmin = false;
+            this.connecte = false;
         }
         else {
-        if (auth.currentUser.email != "admin@admin.com") {
-           this.roleAdmin = false;
+            if (auth.currentUser.email != "admin@admin.com") {
+                this.roleAdmin = false;
+            }
         }
-        }
+        
     },
-    
+
     created() {
         this.getMateriel();
-    console.log("Nom : " + this.nom);
-  },
-   
+        console.log("Nom : " + this.nom);
+    },
+
     methods: {
         async getMateriel() {
             const materielRef = doc(db, "materiels", this.$route.params.id)
             const materiel = await getDoc(materielRef);
-            
+
             this.nom = materiel.get("Nom");
             this.version = materiel.get("Version");
             this.numero = materiel.get("Numero");
@@ -164,14 +138,35 @@ export default {
             this.reference = materiel.get("Reference");
         },
 
-        reserver() {
-            alert('Reserver appelée')
+        async reserver() {
+            const auth = getAuth();
+            const materielRef = doc(db, "materiels", this.$route.params.id)
+            const materiel = await getDoc(materielRef);
+            if (materiel.get("ReserverPar") == "") {
+                await updateDoc(materielRef, {
+                    ReserverPar: auth.currentUser.email,
+                   
+                })
+                alert("Réservé !");
+            }
+            else if(auth.currentUser.email == materiel.get("ReserverPar"))
+            {
+                await updateDoc(materielRef, {
+                    ReserverPar: "",
+                })
+                alert("Rendu !")
+            }
+            else {
+                alert("Le matériel est déjà emprunté par quelqu'un d'autre !")
+            }
+            router.push("/")
+            
         },
         async modifier() {
             const materielRef = doc(db, "materiels", this.$route.params.id)
             await updateDoc(materielRef, {
-                Nom: this.nom,     
-                Numero: this.numero,   
+                Nom: this.nom,
+                Numero: this.numero,
                 Reference: this.reference,
                 Version: this.version
             })
