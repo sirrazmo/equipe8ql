@@ -64,8 +64,14 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="column">
+                    <p class="is-center" id="Reservation"></p>
                     <br>
+                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte">
+                        Reserver
+                    </button>
+                    <br> <br>
                     <button class="button is-warning is-rounded is-center" @click="modifier" v-if="roleAdmin">
                         Modifier
                     </button>
@@ -73,10 +79,7 @@
                     <button class="button is-warning is-rounded is-center" @click="supprimer" v-if="roleAdmin">
                         Supprimer
                     </button>
-                    <br> <br>
-                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte">
-                        Reserver
-                    </button>
+
                 </div>
             </div>
         </div>
@@ -86,7 +89,7 @@
 </template>
 
 <script>
- 
+
 import { db } from '../firebase.js';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
@@ -103,12 +106,14 @@ export default {
             image: "",
             reference: "",
             roleAdmin: true,
+            connecte: true,
         };
     },
 
     async mounted() {
+        const materielRef = doc(db, "materiels", this.$route.params.id);
+        const materiel = await getDoc(materielRef);
         const auth = getAuth();
-        this.connecte = true
         if (!auth.currentUser) {
             this.roleAdmin = false;
             this.connecte = false;
@@ -118,7 +123,15 @@ export default {
                 this.roleAdmin = false;
             }
         }
-        
+        if (materiel.get("ReserverPar") == "") {
+            document.getElementById("Reservation").innerText = "Ce matériel n'est actuellement pas réservé.";
+        }
+        else if (auth.currentUser.email == materiel.get("ReserverPar")) {
+            document.getElementById("Reservation").innerText = "Vous réservez actuellement ce matériel."
+        }
+        else {
+            document.getElementById("Reservation").innerText = "Ce document est réservé par quelqu'un d'autre."
+        }
     },
 
     created() {
@@ -128,7 +141,7 @@ export default {
 
     methods: {
         async getMateriel() {
-            const materielRef = doc(db, "materiels", this.$route.params.id)
+            const materielRef = doc(db, "materiels", this.$route.params.id);
             const materiel = await getDoc(materielRef);
 
             this.nom = materiel.get("Nom");
@@ -145,12 +158,11 @@ export default {
             if (materiel.get("ReserverPar") == "") {
                 await updateDoc(materielRef, {
                     ReserverPar: auth.currentUser.email,
-                   
+
                 })
                 alert("Réservé !");
             }
-            else if(auth.currentUser.email == materiel.get("ReserverPar"))
-            {
+            else if (auth.currentUser.email == materiel.get("ReserverPar")) {
                 await updateDoc(materielRef, {
                     ReserverPar: "",
                 })
@@ -160,7 +172,7 @@ export default {
                 alert("Le matériel est déjà emprunté par quelqu'un d'autre !")
             }
             router.push("/")
-            
+
         },
         async modifier() {
             const materielRef = doc(db, "materiels", this.$route.params.id)
