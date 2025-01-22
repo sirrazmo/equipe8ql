@@ -1,6 +1,7 @@
 <template>
   <header>
-    <nav class="navbar has-background-color-header has-text-color-header" role="navigation" aria-label="main navigation">
+    <nav class="navbar has-background-color-header has-text-color-header" role="navigation"
+      aria-label="main navigation">
       <div class="navbar-brand">
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -50,13 +51,21 @@
     <RouterView />
   </main>
 
-  <footer class="footer breadcrumb has-bullet-separator is-centered has-background-color-header has-text-color-header" aria-label="breadcrumbs">
+  <footer class="footer breadcrumb has-bullet-separator is-centered has-background-color-header has-text-color-header"
+    aria-label="breadcrumbs">
     <ul>
-      <li><RouterLink to="/legalPage" style="color: #fff">Legal</RouterLink></li>
-      <li><RouterLink to="/contact" style="color: #fff">Contact</RouterLink></li>
-      <li>‎ ‎ ‎  © 2024 Polytech Tours ‎ ‎ ‎ </li> <!-- ‎  permet de créer un caractère spécial vide (pour mettre de l'espace)-->
+      <li>
+        <RouterLink to="/legalPage" style="color: #fff">Legal</RouterLink>
+      </li>
+      <li>
+        <RouterLink to="/contact" style="color: #fff">Contact</RouterLink>
+      </li>
+      <li>‎ ‎ ‎ © 2024 Polytech Tours ‎ ‎ ‎ </li>
+      <!-- ‎  permet de créer un caractère spécial vide (pour mettre de l'espace)-->
       <li>‎ ‎ ‎ Version 1.0 ‎ ‎ ‎ </li>
-      <li><RouterLink to="/about" style="color: #fff">About</RouterLink></li>
+      <li>
+        <RouterLink to="/about" style="color: #fff">About</RouterLink>
+      </li>
 
     </ul>
   </footer>
@@ -66,25 +75,25 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-// Get all "navbar-burger" elements
-const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+  // Get all "navbar-burger" elements
+  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
-// Add a click event on each of them
-$navbarBurgers.forEach(el => {
-  el.addEventListener('click', () => {
+  // Add a click event on each of them
+  $navbarBurgers.forEach(el => {
+    el.addEventListener('click', () => {
 
-    // Get the target from the "data-target" attribute
-    const target = el.dataset.target;
-    const $target = document.getElementById(target);
+      // Get the target from the "data-target" attribute
+      const target = el.dataset.target;
+      const $target = document.getElementById(target);
 
-    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-    el.classList.toggle('is-active');
-    $target.classList.toggle('is-active');
+      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+      el.classList.toggle('is-active');
+      $target.classList.toggle('is-active');
 
-    // Add a class to the body for reduced state
-    document.body.classList.toggle('navbar-reduced');
+      // Add a class to the body for reduced state
+      document.body.classList.toggle('navbar-reduced');
+    });
   });
-});
 
 });
 </script>
@@ -92,6 +101,7 @@ $navbarBurgers.forEach(el => {
 
 <style scoped>
 /* Couleurs par défaut (mode clair) */
+
 .has-background-color {
   background-color: hsl(30, 56%, 90%);
 }
@@ -100,11 +110,12 @@ $navbarBurgers.forEach(el => {
   background-color: hsl(30, 56%, 50%);
 }
 
-.has-text-color-header, a {
-  color : white;
+.has-text-color-header,
+a {
+  color: white;
 }
 
-a:hover{
+a:hover {
   background-color: hsl(30, 56%, 65%);
 }
 
@@ -112,35 +123,34 @@ a:hover{
   color: black;
 }
 
-.navbar-reduced .navbar a{
+.navbar-reduced .navbar a {
   color: black;
 }
 
 /* Couleurs pour le mode sombre */
 @media (prefers-color-scheme: dark) {
 
-.has-background-color {
-  background-color: hsl(0, 0%, 14%);
-}
+  .has-background-color {
+    background-color: hsl(0, 0%, 14%);
+  }
 
-.has-background-color-header {
-  background-color: hsl(0, 0%, 7%);
-}
+  .has-background-color-header {
+    background-color: hsl(0, 0%, 7%);
+  }
 
-.has-text-color, a, .has-text-color-header{
-  color: white;
-}
+  .has-text-color,
+  a,
+  .has-text-color-header {
+    color: white;
+  }
 
-a:hover{
-  background-color: hsl(0, 0%, 20%);
-}
+  a:hover {
+    background-color: hsl(0, 0%, 20%);
+  }
 
-.navbar-reduced .navbar a{
-  color: white;
-}
+  .navbar-reduced .navbar a {
+    color: white;
+  }
 
 }
 </style>
-
-
-

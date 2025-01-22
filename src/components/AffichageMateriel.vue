@@ -1,31 +1,32 @@
 <template>
   <div class="has-background-color" style="min-height: 73vh;">
     <table class="table">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Type</th>
-                <th>Version</th>
-                <th>Numero</th>
-                <th>Photo</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="materiel in materiels" :key="materiel.id">
-                <td>{{ materiel.Nom }}</td>
-                <td>{{ materiel.Type }}</td>
-                <td>{{ materiel.Version }}</td>
-                <td>{{ materiel.Numero }}</td>
-                <td>
-                  <figure class="image is-128x128 is-center">
-                    <img :src=materiel.Photo_url />
-                  </figure>
-                </td>
-                <td><button class="button is-warning is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button></td>
-            </tr>
-        
-        </tbody>
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Type</th>
+          <th>Version</th>
+          <th>Numero</th>
+          <th>Photo</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="materiel in materiels" :key="materiel.id">
+          <td>{{ materiel.Nom }}</td>
+          <td>{{ materiel.Type }}</td>
+          <td>{{ materiel.Version }}</td>
+          <td>{{ materiel.Numero }}</td>
+          <td>
+            <figure class="image is-128x128 is-center">
+              <img :src=materiel.Photo_url />
+            </figure>
+          </td>
+          <td><button class="button is-warning is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button>
+          </td>
+        </tr>
+
+      </tbody>
     </table>
   </div>
 </template>
@@ -58,17 +59,29 @@ export default {
   },
   methods: {
     getInfoMat(idMat) {
-      router.push({path:`/info-materiel/${idMat}`});
+      router.push({ path: `/info-materiel/${idMat}` });
     }
   }
 };
 </script>
 <style scoped>
 .image img {
-  max-width: 100%; 
-  max-height: 128px; 
-  object-fit: contain; 
+  max-width: 100%;
+  max-height: 128px;
+  object-fit: contain;
   border: 1px solid #ddd;
   padding: 5px;
+}
+
+.table {
+  background-color: hsl(30, 56%, 90%);
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table {
+    background-color: hsl(0, 0%, 14%);
+    width: 100%;
+  }
 }
 </style>
