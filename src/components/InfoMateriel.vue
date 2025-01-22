@@ -68,7 +68,7 @@
                 <div class="column">
                     <p class="help is-info" id="Reservation"></p>
                     <br>
-                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte">
+                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte" id="BoutonReservation">
                         Reserver
                     </button>
                     <br> <br>
@@ -126,8 +126,13 @@ export default {
         if (materiel.get("ReserverPar") == "") {
             document.getElementById("Reservation").innerText = "Ce matériel n'est actuellement pas réservé.";
         }
+        else if(!auth.currentUser)
+        {
+            document.getElementById("Reservation").innerText = "Connectez-vous pour pouvoir réserver ce matériel."
+        }
         else if (auth.currentUser.email == materiel.get("ReserverPar")) {
             document.getElementById("Reservation").innerText = "Vous réservez actuellement ce matériel."
+            document.getElementById("BoutonReservation").innerText = "Rendre"
         }
         else {
             document.getElementById("Reservation").innerText = "Ce document est réservé par quelqu'un d'autre."
@@ -160,13 +165,13 @@ export default {
                     ReserverPar: auth.currentUser.email,
 
                 })
-                alert("Réservé !");
+                document.getElementById("message").innerText = "Matériel réservé";
             }
             else if (auth.currentUser.email == materiel.get("ReserverPar")) {
                 await updateDoc(materielRef, {
                     ReserverPar: "",
                 })
-                alert("Rendu !")
+                document.getElementById("message").innerText = "Matériel rendu";
             }
             else {
                 alert("Le matériel est déjà emprunté par quelqu'un d'autre !")
@@ -185,7 +190,7 @@ export default {
         },
         async supprimer() {
             await deleteDoc(doc(db, "materiels", this.$route.params.id));
-            alert('Matériel supprimé !');
+            document.getElementById("message").innerText = "Matériel supprimé";
             router.push("/");
         }
     }

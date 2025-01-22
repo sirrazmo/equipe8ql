@@ -29,6 +29,10 @@
         <div class="navbar-end">
 
           <a class="navbar-item">
+            <p class="has-text-weight-light is-italic is-size-7" id="message"></p>
+          </a>
+
+          <a class="navbar-item">
             <p id="nomUser"></p>
           </a>
 

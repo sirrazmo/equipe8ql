@@ -46,7 +46,7 @@ export default {
     const auth = getAuth();
     if (auth.currentUser) {
       auth.signOut();
-      alert("Déconnexion effetuée !");
+      document.getElementById("message").innerText = "Déconnexion effectuée";
       document.getElementById("CO").innerText = "Connexion";
       document.getElementById("nomUser").innerText = "";
       router.push("/");
@@ -68,7 +68,7 @@ export default {
       if (position !== -1) {
         return chaine.substring(0, position);
       } else {
-        return chaine; 
+        return chaine;
       }
     },
 
@@ -81,12 +81,12 @@ export default {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          alert("Connexion effectuée")
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
         });
+      document.getElementById("message").innerText = "Connexion effectuée";
       document.getElementById("CO").innerText = "Déconnexion";
       document.getElementById("nomUser").innerText = String(this.recupererNom(this.email));
       router.push("/");

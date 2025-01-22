@@ -128,7 +128,7 @@ export default {
           RéserverPar:""
         });
         console.log("Document written with ID: ", docRef.id);
-        alert("Ajout du matériel réussi");
+        document.getElementById("message").innerText = "Matériel crée";
         router.push("/");
       }
     },

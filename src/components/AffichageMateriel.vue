@@ -22,13 +22,12 @@
                     <img :src=materiel.Photo_url />
                   </figure>
                 </td>
-                <td><button class="button is-primary is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button></td>
+                <td><button class="button is-warning is-rounded is-center" @click="getInfoMat(materiel.id)">Consulter</button></td>
             </tr>
         
         </tbody>
     </table>
   </div>
-
 </template>
 
 
