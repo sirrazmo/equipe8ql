@@ -127,7 +127,7 @@ export default {
           Numero: parseInt(this.telephone),
           RéserverPar:""
         });
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Document inséré avec ID: ", docRef.id);
         document.getElementById("message").innerText = "Matériel crée";
         router.push("/");
       }
@@ -140,28 +140,28 @@ export default {
       this.imageError = "";
       this.telephoneError = "";
       if (!nom || nom.length < 1 || nom.length > 30) {
-        this.nameError = "The name must be between 1 and 30 characters.";
+        this.nameError = "Le nom doit être entre 1 et 30 caractères.";
         return false;
       }
 
       if (!version || version.length < 3 || version.length > 15) {
-        this.versionError = "The version must be between 3 and 15 characters.";
+        this.versionError = "La version doit être entre 3 et 15 caractères.";
         return false;
       }
 
       if (!reference || !/^(AN|AP|XX)\d{3}$/.test(reference)) {
-        this.referenceError = "The reference must start with AN, AP, or XX and be followed by 3 digits.";
+        this.referenceError = "La référence doit commencer par AN, AP, ou XX et est suvie par 3 chiffres.";
         return false;
       }
 
       if (!imagePath || !/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp))$/.test(imagePath) ) {
-        this.imageError = "The url isn't valid";
+        this.imageError = "L'url n'est pas valide";
         return false;
       }
 
 
       if (!telephone || !/^\d{10}$/.test(telephone)) {
-        this.telephoneError = "The phone number must be 10 digits.";
+        this.telephoneError = "Le numéro de téléphone doit correspondre à 10 chiffres.";
         return false;
       }
 
