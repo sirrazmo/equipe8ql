@@ -93,7 +93,7 @@
 import { db } from '../firebase.js';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
-import router from '@/router.js';
+import router from '../router.js';
 export default {
     /* eslint-disable */
     name: 'InfoMateriel',

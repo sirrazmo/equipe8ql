@@ -1,14 +1,12 @@
+import { vi } from 'vitest';  // Importer vi pour le mocking
 import { mount } from '@vue/test-utils';
 import CreationMateriel from '../components/CreationMateriel.vue';
 
-// Mock Firebase functions
-jest.mock('firebase', () => ({
-  getAuth: jest.fn(() => ({
-    currentUser: { email: 'admin@admin.com' },
-  })),
-  collection: jest.fn(),
-  addDoc: jest.fn(() => Promise.resolve({ id: 'mocked-id' })),
-}));
+// Mock fetch (car node-fetch est utilisé dans ton projet)
+vi.stubGlobal('fetch', vi.fn());  // Remplace global.fetch par une fonction mock
+
+// Mock alert si nécessaire (si tu veux éviter les erreurs liées à l'absence de `alert`)
+vi.stubGlobal('alert', vi.fn());  // Simule alert()
 
 describe('CreationMateriel.vue', () => {
   it('renders the form and validates input', async () => {
