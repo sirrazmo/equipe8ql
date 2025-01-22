@@ -95,7 +95,7 @@ export default {
             router.push("/");
         }
         else {
-            if (auth.currentUser.email != "admin@admin.com" || auth.currentUser.email != "admin2@admin.com") {
+            if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
                 alert("Vous n'êtes pas autorisé à accéder à cette page.");
                 router.push("/");
             }
