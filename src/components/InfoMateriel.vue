@@ -217,22 +217,12 @@ export default {
                 this.telephoneError = "";
                 verif = useVerificationMateriel(this.nom,this.version,this.reference,this.image,this.numero);
             } catch (e) {
-            
-                switch(e.code) {
-                case 1 : this.nameError = e.message;
-                break;
-
-                case 2 : this.versionError = e.message;
-                break;
-
-                case 3 : this.referenceError = e.message;
-                break;
-
-                case 4 : this.imageError = e.message;
-                break;
-
-                case 5 : this.telephoneError = e.message;
-                break;
+                for(const error of e) {
+                    if (error.code == 1) { this.nameError = error.message; }
+                    if (error.code == 2) { this.versionError = error.message; }
+                    if (error.code == 3) { this.referenceError = error.message; }
+                    if (error.code == 4) { this.imageError = error.message; }
+                    if (error.code == 5) { this.telephoneError = error.message; }
                 }
             }
 
