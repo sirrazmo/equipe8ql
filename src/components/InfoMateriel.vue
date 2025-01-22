@@ -107,6 +107,7 @@ export default {
             reference: "",
             roleAdmin: true,
             connecte: true,
+            
         };
     },
 
@@ -119,7 +120,7 @@ export default {
             this.connecte = false;
         }
         else {
-            if (auth.currentUser.email != "admin@admin.com") {
+            if (auth.currentUser.email != "admin@admin.com" || auth.currentUser.email != "admin2@admin.com" ) {
                 this.roleAdmin = false;
             }
         }

@@ -26,8 +26,8 @@
 
 <script>
 import { ref, onMounted } from 'vue';
-//import { collection, getDocs } from 'firebase/firestore';
-//import { db } from '../firebase.js';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase.js';
 import router from '../router.js';
 import { getAuth } from 'firebase/auth';
 export default {
@@ -40,7 +40,7 @@ export default {
       router.push("/");
     }
     else {
-      if (auth.currentUser.email != "admin@admin.com") {
+      if (auth.currentUser.email != "admin@admin.com" || auth.currentUser.email != "admin2@admin.com") {
         alert("Vous n'êtes pas autorisé à accéder à cette page.");
         router.push("/");
       }
@@ -51,29 +51,8 @@ export default {
     const utilisateurs = ref([]);
 
     const fetchUtilisateurs = async () => {
-      const listAllUsers = (nextPageToken) => {
-        // List batch of users, 1000 at a time.
-        getAuth().listUsers(1000, nextPageToken)
-          .then((listUsersResult) => {
-            listUsersResult.users.forEach((userRecord) => {
-              console.log('user', userRecord.toJSON());
-            });
-            if (listUsersResult.pageToken) {
-              // List next batch of users.
-              listAllUsers(listUsersResult.pageToken);
-            }
-          })
-          .catch((error) => {
-            console.log('Error listing users:', error);
-          });
-      };
-      // Start listing users from the beginning, 1000 at a time.
-      listAllUsers();
-
-
-
-      /*const queryUtilisateursSnapshot = await getDocs(collection(db, 'utilisateurs'));
-      utilisateurs.value = queryUtilisateursSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));*/
+      const queryUtilisateursSnapshot = await getDocs(collection(db, 'utilisateurs'));
+      utilisateurs.value = queryUtilisateursSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
     };
 
     onMounted(() => {
