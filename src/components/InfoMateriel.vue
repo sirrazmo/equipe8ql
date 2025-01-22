@@ -9,13 +9,11 @@
                         <p>Nom : </p>
                         <p class="control has-icons-left">
                             <input class="input" type="text" v-model="this.nom" id="Nom" :readonly="!roleAdmin">
-
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-id-card-clip"></i>
                             </span>
-
-
                         </p>
+                        <p class="help is-danger" v-if="nameError">{{ nameError }}</p>
 
                         <p>Référence :</p>
                         <p class="control has-icons-left">
@@ -25,6 +23,7 @@
                                 <i class="fa-solid fa-barcode"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="referenceError">{{ referenceError }}</p>
 
                     </div>
                 </div>
@@ -39,6 +38,8 @@
                                 <i class="fa-solid fa-gears"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="versionError">{{ versionError }}</p>
+                        
 
                         <p>Numéro :</p>
                         <p class="control has-icons-left">
@@ -47,8 +48,9 @@
                                 <i class="fa-solid fa-list-ol"></i>
                             </span>
                         </p>
-
+                        <p class="help is-danger" v-if="telephoneError">{{ telephoneError }}</p>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -58,28 +60,38 @@
                     <div class="container is-fluid">
                         <div class="is-center">
                             <p class="is-center">Photo : </p>
+                            <p class="control has-icons-left">
+                            <input class="input is-small" style="width: 50%;" type="text" v-model="this.image" id="Image" v-if="roleAdmin">
+                        </p>
+                        <p class="help is-danger" v-if="imageError">{{ imageError }}</p>
+                        <br>
                             <figure class="image is-128x128 is-center">
                                 <img :src="this.image" />
                             </figure>
                         </div>
+                       
                     </div>
+                    
                 </div>
 
-                <div class="column">
-                    <p class="help is-info" id="Reservation"></p>
-                    <br>
-                    <button class="button is-warning is-rounded is-center" disabled="BoutonOff" @click="reserver" v-if="connecte" id="BoutonReservation">
-                        Reserver
-                    </button>
-                    <br> <br>
-                    <button class="button is-warning is-rounded is-center" @click="modifier" v-if="roleAdmin">
-                        Modifier
-                    </button>
-                    <br> <br>
-                    <button class="button is-warning is-rounded is-center" @click="supprimer" v-if="roleAdmin">
-                        Supprimer
-                    </button>
-
+                <div v-if="this.loading" class="has-text-centered">       
+                </div>
+                <div v-else>
+                    <div class="column">
+                        <p class="help is-info" id="Reservation"></p>
+                        <br>
+                        <button class="button is-warning is-rounded is-center" disabled="BoutonOff" @click="reserver" v-if="connecte" id="BoutonReservation">
+                            Reserver
+                        </button>
+                        <br> <br>
+                        <button class="button is-warning is-rounded is-center" @click="modifier" v-if="roleAdmin">
+                            Modifier
+                        </button>
+                        <br> <br>
+                        <button class="button is-warning is-rounded is-center" @click="supprimer" v-if="roleAdmin">
+                            Supprimer
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,6 +106,8 @@ import { db } from '../firebase.js';
 import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import router from '../router.js';
+import {useVerificationMateriel} from '../verification.js';
+
 export default {
     /* eslint-disable */
     name: 'InfoMateriel',
@@ -105,8 +119,14 @@ export default {
             numero: "",
             image: "",
             reference: "",
+            nameError: "",
+            versionError: "",
+            referenceError: "",
+            telephoneError: "",
+            imageError:"",
             roleAdmin: true,
             connecte: true,
+            loading: true,
             
         };
     },
@@ -120,30 +140,34 @@ export default {
             this.connecte = false;
         }
         else {
+            
             if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com" ) {
                 this.roleAdmin = false;
             }
         }
+
         if (materiel.get("ReserverPar") == "") {
-            document.getElementById("Reservation").innerText = "Ce matériel n'est actuellement pas réservé.";
+            document.getElementById("Reservation").innerText = "Ce matériel n'est actuellement pas réservé.";;
+            document.getElementById("BoutonReservation").removeAttribute("disabled");
         }
         else if(!auth.currentUser)
         {
-            document.getElementById("Reservation").innerText = "Connectez-vous pour pouvoir réserver ce matériel."
+            document.getElementById("Reservation").innerText = "Connectez-vous pour pouvoir réserver ce matériel.";
         }
         else if (auth.currentUser.email == materiel.get("ReserverPar")) {
-            document.getElementById("Reservation").innerText = "Vous réservez actuellement ce matériel."
-            document.getElementById("BoutonReservation").innerText = "Rendre"
+            document.getElementById("Reservation").innerText = "Vous réservez actuellement ce matériel.";
+            document.getElementById("BoutonReservation").removeAttribute("disabled");
+            document.getElementById("BoutonReservation").innerText = "Rendre";
         }
         else {
-            document.getElementById("Reservation").innerText = "Ce document est réservé par quelqu'un d'autre."
-            this.BoutonOff
+            document.getElementById("Reservation").innerText = "Ce document est réservé par quelqu'un d'autre.";
+            document.getElementById("BoutonReservation").setAttribute("disabled","BoutonOff");
         }
     },
 
     created() {
         this.getMateriel();
-        console.log("Nom : " + this.nom);
+        
     },
 
     methods: {
@@ -156,6 +180,8 @@ export default {
             this.numero = materiel.get("Numero");
             this.image = materiel.get("Photo_url");
             this.reference = materiel.get("Reference");
+            this.loading = false;
+            
         },
 
         async reserver() {
@@ -176,25 +202,58 @@ export default {
                 document.getElementById("message").innerText = "Matériel rendu";
             }
             else {
-                alert("Le matériel est déjà emprunté par quelqu'un d'autre !")
+                alert("Le matériel est déjà emprunté par quelqu'un d'autre !");
             }
-            router.push("/")
+            router.push("/");
 
         },
         async modifier() {
-            const materielRef = doc(db, "materiels", this.$route.params.id)
-            await updateDoc(materielRef, {
+            let verif = false;
+            try {
+                this.nameError = "";
+                this.versionError = "";
+                this.referenceError = "";
+                this.imageError = "";
+                this.telephoneError = "";
+                verif = useVerificationMateriel(this.nom,this.version,this.reference,this.image,this.numero);
+            } catch (e) {
+            
+                switch(e.code) {
+                case 1 : this.nameError = e.message;
+                break;
+
+                case 2 : this.versionError = e.message;
+                break;
+
+                case 3 : this.referenceError = e.message;
+                break;
+
+                case 4 : this.imageError = e.message;
+                break;
+
+                case 5 : this.telephoneError = e.message;
+                break;
+                }
+            }
+
+            if (verif) {
+                const materielRef = doc(db, "materiels", this.$route.params.id)
+                await updateDoc(materielRef, {
                 Nom: this.nom,
                 Numero: this.numero,
                 Reference: this.reference,
+                Photo_url: this.image,
                 Version: this.version
-            })
+                })
+            }
+           
+           
         },
         async supprimer() {
             await deleteDoc(doc(db, "materiels", this.$route.params.id));
             document.getElementById("message").innerText = "Matériel supprimé";
             router.push("/");
-        }
+        },
     }
 };
 </script>

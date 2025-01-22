@@ -63,7 +63,7 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <p class="control">
-              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference,imagePath, telephone))">
+              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel()">
                 Créer le matériel
               </button>
             </p>
@@ -81,6 +81,8 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import router from '../router.js';
 import { getAuth } from 'firebase/auth';
+import {useVerificationMateriel } from '../verification.js'
+
 
 export default {
   async mounted() {
@@ -113,10 +115,40 @@ export default {
     };
   },
 
+  setup() {
+    
+  },
+
   methods: {
+    async creerMateriel() {
+      let verif = false;
+      try {
+        this.nameError = "";
+        this.versionError = "";
+        this.referenceError = "";
+        this.imageError = "";
+        this.telephoneError = "";
+        verif = useVerificationMateriel(this.nom,this.version,this.reference,this.imagePath,this.telephone);
+      } catch (e) {
+       
+        switch(e.code) {
+          case 1 : this.nameError = e.message;
+          break;
 
+          case 2 : this.versionError = e.message;
+          break;
 
-    async creerMateriel(verif) {
+          case 3 : this.referenceError = e.message;
+          break;
+
+          case 4 : this.imageError = e.message;
+          break;
+
+          case 5 : this.telephoneError = e.message;
+          break;
+        }
+      }
+
       if (verif){
         const docRef = await addDoc(collection(db, "materiels"), {
           Nom: this.nom,
@@ -132,47 +164,6 @@ export default {
         router.push("/");
       }
     },
-
-    verificationMateriel(nom, version, reference, imagePath, telephone) {
-      this.nameError = "";
-      this.versionError = "";
-      this.referenceError = "";
-      this.imageError = "";
-      this.telephoneError = "";
-      if (!nom || nom.length < 1 || nom.length > 30) {
-        this.nameError = "Le nom doit être entre 1 et 30 caractères.";
-        return false;
-      }
-
-      if (!version || version.length < 3 || version.length > 15) {
-        this.versionError = "La version doit être entre 3 et 15 caractères.";
-        return false;
-      }
-
-      if (!reference || !/^(AN|AP|XX)\d{3}$/.test(reference)) {
-        this.referenceError = "La référence doit commencer par AN, AP, ou XX et est suvie par 3 chiffres.";
-        return false;
-      }
-
-      if (!imagePath || !/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp))$/.test(imagePath) ) {
-        this.imageError = "L'url n'est pas valide";
-        return false;
-      }
-
-
-      if (!telephone || !/^\d{10}$/.test(telephone)) {
-        this.telephoneError = "Le numéro de téléphone doit correspondre à 10 chiffres.";
-        return false;
-      }
-
-      return true;
-    },
-
-    selectionFichier(event) {
-      this.file = event.target.files[0];
-    },
-
-
 
     checkDigit(event) {
       if (event.key.length == 1 && isNaN(Number(event.key))) {
