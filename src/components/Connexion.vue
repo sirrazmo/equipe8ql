@@ -39,7 +39,7 @@
 <script>
 
 import { browserSessionPersistence, getAuth, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import router from '@/router.js';
+import router from '../router.js';
 export default {
 
   async mounted() {

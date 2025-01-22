@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import router from '@/router.js';
+import router from '../router.js';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.js';
 import { doc,getDoc } from 'firebase/firestore';

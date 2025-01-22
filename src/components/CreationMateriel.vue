@@ -79,7 +79,7 @@
 <script>
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
-import router from '@/router.js';
+import router from '../router.js';
 import { getAuth } from 'firebase/auth';
 
 export default {
