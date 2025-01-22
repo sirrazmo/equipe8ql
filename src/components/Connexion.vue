@@ -23,6 +23,7 @@
           </span>
         </p>
       </div>
+      <p class="help is-danger" v-if="ErreurConnexion">L'identifiant ou le mot de passe est incorrect.</p>
       <div class="field columns is-centered column is-narrow">
         <p class="control">
           <button class="button is-warning is-rounded is-center" @click="connexion">
@@ -59,6 +60,7 @@ export default {
     return {
       email: "",
       password: "",
+      ErreurConnexion: false,
     };
   },
   methods: {
@@ -81,15 +83,20 @@ export default {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
+
         })
         .catch((error) => {
+          this.ErreurConnexion = true;
           const errorCode = error.code;
           const errorMessage = error.message;
         });
+
       document.getElementById("message").innerText = "Connexion effectuée";
       document.getElementById("CO").innerText = "Déconnexion";
       document.getElementById("nomUser").innerText = String(this.recupererNom(this.email));
       router.push("/");
+
+
     }
   }
 };
