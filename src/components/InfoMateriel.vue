@@ -68,7 +68,7 @@
                 <div class="column">
                     <p class="help is-info" id="Reservation"></p>
                     <br>
-                    <button class="button is-warning is-rounded is-center" @click="reserver" v-if="connecte" id="BoutonReservation">
+                    <button class="button is-warning is-rounded is-center" disabled="BoutonOff" @click="reserver" v-if="connecte" id="BoutonReservation">
                         Reserver
                     </button>
                     <br> <br>
@@ -136,6 +136,7 @@ export default {
         }
         else {
             document.getElementById("Reservation").innerText = "Ce document est réservé par quelqu'un d'autre."
+            this.BoutonOff
         }
     },
 
