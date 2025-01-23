@@ -24,7 +24,7 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
         listError.push(errorMaterial("L'url n'est pas valide",4));
     }
 
-    if (!telephone || !/^\d{10}$/.test(telephone)) {
+    if (!telephone || !/^[0-9]{10}$/.test(telephone)) {
         listError.push(errorMaterial("Le numéro de téléphone doit correspondre à 10 chiffres.",5));
     }
 

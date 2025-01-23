@@ -84,7 +84,7 @@
                             Reserver
                         </button>
                         <br> <br>
-                        <button class="button is-warning is-rounded is-center" @click="modifier" v-if="roleAdmin">
+                        <button class="button is-warning is-rounded is-center" id="modifier" @click="modifier" v-if="roleAdmin">
                             Modifier
                         </button>
                         <br> <br>
