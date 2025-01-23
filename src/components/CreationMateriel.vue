@@ -103,6 +103,7 @@ export default {
     return {
       file: null,
       telephone: "",
+      type: "",
       reference: "",
       version: "",
       nom: "",
