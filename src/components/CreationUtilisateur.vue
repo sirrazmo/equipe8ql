@@ -35,7 +35,9 @@
             <div class="field">
                 <label class="label">Administrateur</label>
                 <div class="control">
-                    <input class="input" type="text" v-model="admin" placeholder="Oui/Non" required>
+                    <label><input type="radio" v-model="admin" value="Oui"> Oui</label>
+                    <br>
+                    <label><input type="radio" v-model="admin" value="Non"> Non</label>
                 </div>
             </div>
 
@@ -99,7 +101,7 @@ export default {
         return {
             file: null,
             email: "",
-            admin: "",
+            admin: "Non",
             prenom: "",
             nom: "",
             password: "",
