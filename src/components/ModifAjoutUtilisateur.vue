@@ -141,10 +141,6 @@ export default {
             this.email = utilisateur.get("email");
             this.matricule = utilisateur.get("Matricule");
         },
-        
-        valider() {
-            alert('Valider appeler')
-        },
 
         async modifier() {
             let verif = false;
@@ -159,9 +155,9 @@ export default {
                 for(const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
-                    if (error.code == 3) { this.emailError = error.message; }
-                    if (error.code == 4) { this.motDePasseError = error.message; }
-                    if (error.code == 5) { this.matriculeError = error.message; }
+                    if (error.code == 3) { this.matriculeError = error.message; }
+                    if (error.code == 4) { this.emailError = error.message; }
+                    if (error.code == 5) { this.motDePasseError = error.message; }
                 }
             }
 
@@ -176,12 +172,11 @@ export default {
                     Matricule: this.matricule
                 });
                 console.log("Mise à jour terminée.");
+                document.getElementById("message").innerText = "Utilisateur modifié";
+                router.push("/utilisateur");
             } else {
                 console.log("Les données ne sont pas valides.");
             }
-
-            document.getElementById("message").innerText = "Utilisateur modifié";
-            router.push("/utilisateur");
            
         },
     }

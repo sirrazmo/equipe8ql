@@ -8,7 +8,7 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
 
     var listError = [];
 
-    if (!nom || !/^[a-zA-Z- ]{1,30}$/.test(nom)) {
+    if (!nom || !/^[a-zA-Z-çé ]{1,30}$/.test(nom)) {
         listError.push(errorMaterial("Le nom doit être entre 1 et 30 caractères.", 1));
     }
 
@@ -45,12 +45,16 @@ export function useVerificationUtilisateur(nom, prenom, email, password, matricu
 
     var listError = [];
 
-    if (!nom || nom.length < 1 || nom.length > 30) {
+    if (!nom || !/^[a-zA-Z-çé ]{1,30}$/.test(nom)) {
         listError.push(errorUtilisateur("Le nom doit être entre 1 et 30 caractères.", 1));
     }
 
-    if (!prenom || prenom.length < 1 || prenom.length > 30) {
+    if (!prenom || !/^[a-zA-Z-çé ]{1,30}$/.test(prenom)) {
         listError.push(errorUtilisateur("Le prénom doit être entre 1 et 30 caractères.", 2));
+    }
+
+    if (!matricule || !/([a-zA-Z]){7}$/.test(matricule)) {
+        listError.push(errorUtilisateur("Le matricule doit faire 7 caractères alphabétique", 3));
     }
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/) {
@@ -60,11 +64,6 @@ export function useVerificationUtilisateur(nom, prenom, email, password, matricu
     if (!password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@?!ù$^&+=\-*/])(?=.*[0-9]).{8,30}$/.test(password)) {
         listError.push(errorUtilisateur("Le mot de passe doit contenir une lettre minuscule, une lettre majuscule, un caractère spécial, et avoir une longueur entre 8 et 30 caractères.",
              5));
-    }
-
-    
-    if (!matricule || !/([a-zA-Z]){7}$/.test(matricule)) {
-        listError.push(errorUtilisateur("Le matricule doit faire 7 caractères alphabétique", 6));
     }
 
     if (listError.length > 0) {
