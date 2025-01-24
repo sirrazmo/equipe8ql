@@ -178,7 +178,8 @@ export default {
                 console.log("Les données ne sont pas valides.");
             }
 
-           
+            document.getElementById("message").innerText = "Utilisateur modifié";
+            router.push("/utilisateur");
            
         },
     }
