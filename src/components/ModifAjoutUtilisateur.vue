@@ -139,6 +139,7 @@ export default {
             this.prenom = utilisateur.get("Prénom");
             this.choix = utilisateur.get("admin");
             this.email = utilisateur.get("email");
+            this.matricule = utilisateur.get("Matricule");
         },
         
         valider() {
@@ -171,7 +172,8 @@ export default {
                     Prénom: this.prenom,
                     Nom: this.nom,
                     admin: this.choix,
-                    email: this.email
+                    email: this.email,
+                    Matricule: this.matricule
                 });
                 console.log("Mise à jour terminée.");
             } else {
