@@ -2,13 +2,13 @@
   <div class="has-background-color" style="min-height: 73vh;">
     <div class="container">
       <p class="title" style="padding-top: 1%; padding-bottom: 1%;">
-        Creation of material
+        Creation d'un matériel
       </p>
     </div>
 
     <div class="container">
       <div class="field">
-        <label class="label">Name</label>
+        <label class="label">Nom</label>
         <div class="control">
           <input class="input" type="text" v-model="nom" placeholder="Name" required>
         </div>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Reference</label>
+        <label class="label">Référence</label>
         <div class="control">
           <input class="input" type="text" v-model="reference" placeholder="Ref : AN185 / AP748 / XX784" required>
         </div>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Picture</label>
+        <label class="label">Image</label>
         <div class="control">
           <input class="input" type="text" v-model="imagePath" placeholder="URL picture" required>
         </div>
@@ -52,7 +52,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Phone number</label>
+        <label class="label">Numéro de téléphone</label>
         <div class="control">
           <input class="input" type="tel" v-model="telephone" @keydown="checkDigit" placeholder="ex : 0678145936"
             required>

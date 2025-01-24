@@ -71,3 +71,17 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.table {
+  background-color: hsl(30, 56%, 90%);
+  width: 100%;
+}
+
+@media (prefers-color-scheme: dark) {
+  .table {
+    background-color: hsl(0, 0%, 14%);
+    width: 100%;
+  }
+}
+</style>
