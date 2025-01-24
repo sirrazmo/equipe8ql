@@ -36,12 +36,13 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase.js';
-import router from '../router.js';
+import { db } from '../../firebase.js';
+import router from '../../router.js';
 
 export default {
   name: 'FirestoreExample',
   setup() {
+    //Affichage des matériels
     const materiels = ref([]);
 
     const fetchMateriels = async () => {

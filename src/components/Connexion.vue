@@ -51,7 +51,7 @@ export default {
       document.getElementById("CO").innerText = "Connexion";
       document.getElementById("nomUser").innerText = "";
       router.push("/");
-      setTimeout(() => {document.getElementById("message").innerText = "";},3000);
+      setTimeout(() => { document.getElementById("message").innerText = ""; }, 3000);
     }
   },
 
@@ -78,20 +78,22 @@ export default {
 
     async connexion() {
       const auth = getAuth();
-      try{
-          await setPersistence(auth, browserSessionPersistence);
-          const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
-          const user = userCredential.user;
-          document.getElementById("message").innerText = "Connexion réussie";
-          document.getElementById("CO").innerText = "Déconnexion";
-          document.getElementById("nomUser").innerText = this.recupererNom(this.email);
-          router.push("/");
-         
-        } catch (error) {
-          this.ErreurConnexion = true;
-          this.email = "";
-          this.password = "";
-       }
+      try {
+        //Essaie de se connecter avec les informations remplies
+        await setPersistence(auth, browserSessionPersistence);
+        const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+        const user = userCredential.user;
+        document.getElementById("message").innerText = "Connexion réussie";
+        document.getElementById("CO").innerText = "Déconnexion";
+        document.getElementById("nomUser").innerText = this.recupererNom(this.email);
+        router.push("/");
+
+      } catch (error) {
+        //Affichage de l'erreur + mise des champs à vide
+        this.ErreurConnexion = true;
+        this.email = "";
+        this.password = "";
+      }
     }
   }
 };

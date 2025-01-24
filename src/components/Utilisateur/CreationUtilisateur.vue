@@ -37,7 +37,7 @@
                 <div class="control">
                     <label><input type="radio" v-model="admin" value=true> Oui</label>
                     <br>
-                    <label><input type="radio" v-model="admin" value=false> Non</label>
+                    <label><input type="radio" v-model="admin" value=false checked> Non</label>
                 </div>
             </div>
 
@@ -77,27 +77,29 @@
 
 <script>
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase.js';
-import router from '../router.js';
+import { db } from '../../firebase.js';
+import router from '../../router.js';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-import { useVerificationUtilisateur } from '../verification.js'
+import { useVerificationUtilisateur } from '../../verification.js'
 
 export default {
     async mounted() {
-        const auth = getAuth();
+        const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
         if (!auth.currentUser) {
+            // Vérification si l'utilisateur est connecté
             alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
-            router.push("/");
-        }
-        else {
+            router.push("/"); // Redirection vers la page d'accueil
+        } else {
+            // Vérification des droits d'accès pour un utilisateur non administrateur
             if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
                 alert("Vous n'êtes pas autorisé à accéder à cette page.");
-                router.push("/");
+                router.push("/"); // Redirection vers la page d'accueil
             }
         }
     },
     name: 'creationUtilisateur',
     data() {
+        // Données réactives utilisées dans le composant
         return {
             file: null,
             email: "",
@@ -114,15 +116,12 @@ export default {
         };
     },
 
-    setup() {
-
-    },
-
     methods: {
         async creerUtilisateur() {
             const auth = getAuth();
             let verif = false;
             try {
+                // Réinitialisation des messages d'erreur avant la vérification
                 this.nomError = "";
                 this.prenomError = "";
                 this.emailError = "";
@@ -130,16 +129,17 @@ export default {
                 this.matriculeError = "";
                 verif = useVerificationUtilisateur(this.nom, this.prenom, this.email, this.password, this.matricule);
             } catch (e) {
-
+                // Gestion des erreurs
                 for (const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
                     if (error.code == 4) { this.emailError = error.message; }
                     if (error.code == 5) { this.passwordError = error.message; }
-                    if (error.code == 6) { this.matriculeError = error.message; }
+                    if (error.code == 3) { this.matriculeError = error.message; }
                 }
             }
             if (verif) {
+                // Si les données sont valides, mise à jour dans la base de données Firestore
                 const docRef = await addDoc(collection(db, "utilisateurs"), {
                     Matricule: this.matricule,
                     Nom: this.nom,
@@ -147,6 +147,7 @@ export default {
                     admin: this.admin,
                     email: this.email,
                 });
+                // Ajout aussi dans l'authentification
                 createUserWithEmailAndPassword(auth, this.email, this.password);
                 console.log("Document inséré avec ID: ", docRef.id);
                 document.getElementById("message").innerText = "Utilisateur crée";

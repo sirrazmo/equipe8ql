@@ -1,5 +1,5 @@
 export function useVerificationMateriel(nom, version, reference, imagePath, telephone) {
-
+    //Fonction pour vérifier les formulaires de création et modification des matériels
     function errorMaterial(message, code) {
         const error = new Error(message);
         error.code = code;
@@ -36,7 +36,7 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
 }
 
 export function useVerificationUtilisateur(nom, prenom, email, password, matricule) {
-
+    //Fonction pour vérifier les formulaires de création et modification des utilisateurs
     function errorUtilisateur(message, code) {
         const error = new Error(message);
         error.code = code;
@@ -63,12 +63,12 @@ export function useVerificationUtilisateur(nom, prenom, email, password, matricu
 
     if (!password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@?!ù$^&+=\-*/])(?=.*[0-9]).{8,30}$/.test(password)) {
         listError.push(errorUtilisateur("Le mot de passe doit contenir une lettre minuscule, une lettre majuscule, un caractère spécial, et avoir une longueur entre 8 et 30 caractères.",
-             5));
+            5));
     }
 
     if (listError.length > 0) {
         throw listError;
     }
-    
+
     return true;
 }

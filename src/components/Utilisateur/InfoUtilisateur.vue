@@ -87,29 +87,31 @@
 </template>
 
 <script>
-import router from '../router.js';
+import router from '../../router.js';
 import { getAuth } from 'firebase/auth';
-import { db } from '../firebase.js';
-import { doc,getDoc, updateDoc } from 'firebase/firestore';
-import {useVerificationUtilisateur} from '../verification.js';
+import { db } from '../../firebase.js';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useVerificationUtilisateur } from '../../verification.js';
 
 export default {
     async mounted() {
-        const auth = getAuth();
+        const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
         if (!auth.currentUser) {
+            // Vérification si l'utilisateur est connecté
             alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
-            router.push("/");
-        }
-        else {
+            router.push("/"); // Redirection vers la page d'accueil
+        } else {
+            // Vérification des droits d'accès pour un utilisateur non administrateur
             if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
                 alert("Vous n'êtes pas autorisé à accéder à cette page.");
-                router.push("/");
+                router.push("/"); // Redirection vers la page d'accueil
             }
         }
     },
     /* eslint-disable */
-    name: 'ModifAjoutUtlisateur',
+    name: 'InfoUtlisateur',
     data() {
+        // Déclaration des données réactives utilisées dans le composant
         return {
             nom: '',
             prenom: '',
@@ -120,21 +122,24 @@ export default {
             prenomError: "",
             matriculeError: "",
             motDePasseError: "",
-            emailError:"",
-            adminError:"",
-            choix: 'utilisateur'
+            emailError: "",
+            adminError: "",
+            choix: 'utilisateur' // Valeur par défaut pour le choix du rôle utilisateur
         };
     },
 
     created() {
+        // Appel de la méthode pour récupérer les données de l'utilisateur lors de la création du composant
         this.getUtilisateurs();
-  },
+    },
 
     methods: {
         async getUtilisateurs() {
-            const utlisateurRef = doc(db, "utilisateurs", this.$route.params.id)
+            // Récupération des informations de l'utilisateur via Firestore
+            const utlisateurRef = doc(db, "utilisateurs", this.$route.params.id);
             const utilisateur = await getDoc(utlisateurRef);
-            
+
+            // Mise à jour des champs avec les données récupérées
             this.nom = utilisateur.get("Nom");
             this.prenom = utilisateur.get("Prénom");
             this.choix = utilisateur.get("admin");
@@ -145,14 +150,18 @@ export default {
         async modifier() {
             let verif = false;
             try {
+                // Réinitialisation des messages d'erreur avant la vérification
                 this.nomError = "";
-                this.prenomError= "";
-                this.matriculeError= "";
-                this.motDePasseError= "";
-                this.emailError="";
-                verif = useVerificationUtilisateur(this.nom,this.prenom, this.email,this.motDePasse, this.matricule);
+                this.prenomError = "";
+                this.matriculeError = "";
+                this.motDePasseError = "";
+                this.emailError = "";
+
+                // Appel de la fonction de vérification des données utilisateur
+                verif = useVerificationUtilisateur(this.nom, this.prenom, this.email, this.motDePasse, this.matricule);
             } catch (e) {
-                for(const error of e) {
+                // Gestion des erreurs
+                for (const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
                     if (error.code == 3) { this.matriculeError = error.message; }
@@ -162,6 +171,7 @@ export default {
             }
 
             if (verif) {
+                // Si les données sont valides, mise à jour dans la base de données Firestore
                 console.log("Mise à jour en cours...");
                 const utilisateurRef = doc(db, "utilisateurs", this.$route.params.id);
                 await updateDoc(utilisateurRef, {
@@ -171,13 +181,17 @@ export default {
                     email: this.email,
                     Matricule: this.matricule
                 });
+
+                // Pour une future implémentation du changement de mot de passe
+                // updatePassword(user, this.motDePasse)
+
                 console.log("Mise à jour terminée.");
                 document.getElementById("message").innerText = "Utilisateur modifié";
-                router.push("/utilisateur");
+                router.push("/utilisateur"); // Redirection après la mise à jour
             } else {
+                // Si les données ne sont pas valides, log dans la console
                 console.log("Les données ne sont pas valides.");
             }
-           
         },
     }
 };

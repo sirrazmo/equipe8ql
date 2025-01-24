@@ -78,29 +78,32 @@
 
 <script>
 import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../firebase.js';
-import router from '../router.js';
+import { db } from '../../firebase.js';
+import router from '../../router.js';
 import { getAuth } from 'firebase/auth';
-import { useVerificationMateriel } from '../verification.js'
+import { useVerificationMateriel } from '../../verification.js'
 
 
 export default {
   async mounted() {
-    const auth = getAuth();
+    const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
     if (!auth.currentUser) {
+      // Vérification si l'utilisateur est connecté
       alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
-      router.push("/");
-    }
-    else {
+      router.push("/"); // Redirection vers la page d'accueil
+    } else {
+      // Vérification des droits d'accès pour un utilisateur non administrateur
       if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
         alert("Vous n'êtes pas autorisé à accéder à cette page.");
-        router.push("/");
+        router.push("/"); // Redirection vers la page d'accueil
       }
     }
   },
   name: 'creationMateriel',
   data() {
+    // Données réactives utilisées dans le composant
     return {
+
       file: null,
       telephone: "",
       type: "",
@@ -124,6 +127,7 @@ export default {
     async creerMateriel() {
       let verif = false;
       try {
+        // Réinitialisation des messages d'erreur avant la vérification
         this.nameError = "";
         this.versionError = "";
         this.referenceError = "";
@@ -131,7 +135,7 @@ export default {
         this.telephoneError = "";
         verif = useVerificationMateriel(this.nom, this.version, this.reference, this.imagePath, this.telephone);
       } catch (e) {
-
+        // Gestion des erreurs
         for (const error of e) {
           if (error.code == 1) { this.nameError = error.message; }
           if (error.code == 2) { this.versionError = error.message; }
@@ -142,6 +146,7 @@ export default {
       }
 
       if (verif) {
+        // Si les données sont valides, mise à jour dans la base de données Firestore
         const docRef = await addDoc(collection(db, "materiels"), {
           Nom: this.nom,
           Type: this.type,

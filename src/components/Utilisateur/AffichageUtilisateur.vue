@@ -27,27 +27,29 @@
 <script>
 import { ref, onMounted } from 'vue';
 import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase.js';
-import router from '../router.js';
+import { db } from '../../firebase.js';
+import router from '../../router.js';
 import { getAuth } from 'firebase/auth';
 export default {
   name: 'FirestoreExample',
 
   async mounted() {
-    const auth = getAuth();
+    const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
     if (!auth.currentUser) {
+      // Vérification si l'utilisateur est connecté
       alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
-      router.push("/");
-    }
-    else {
+      router.push("/"); // Redirection vers la page d'accueil
+    } else {
+      // Vérification des droits d'accès pour un utilisateur non administrateur
       if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
         alert("Vous n'êtes pas autorisé à accéder à cette page.");
-        router.push("/");
+        router.push("/"); // Redirection vers la page d'accueil
       }
     }
   },
 
   setup() {
+    //Affichage des utilisateurs
     const utilisateurs = ref([]);
 
     const fetchUtilisateurs = async () => {
