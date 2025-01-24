@@ -100,11 +100,17 @@ export default {
         return {
             file: null,
             email: "",
-            admin: "Non",
+            admin: "",
             prenom: "",
             nom: "",
             password: "",
             matricule: "",
+            nomError: "",
+            prenomError: "",
+            adminError: "",
+            emailError: "",
+            passwordError: "",
+            matriculeError: "",
         };
     },
 
@@ -114,6 +120,7 @@ export default {
 
     methods: {
         async creerUtilisateur() {
+            //const auth = getAuth();
             let verif = false;
             try {
                 this.nomError = "";
@@ -122,7 +129,7 @@ export default {
                 this.emailError = "";
                 this.passwordError = "";
                 this.matriculeError = "";
-                verif = useVerificationUtilisateur(this.nom, this.prenom, this.admin, this.email, this.matricule);
+                verif = useVerificationUtilisateur(this.nom, this.prenom, this.admin, this.email, this.password, this.matricule);
             } catch (e) {
 
                 for (const error of e) {
@@ -142,6 +149,7 @@ export default {
                     Administrateur: this.admin,
                     Email: this.email,
                 });
+                //createUserWithEmailAndPassword(auth, this.email, this.password);
                 console.log("Document inséré avec ID: ", docRef.id);
                 document.getElementById("message").innerText = "Utilisateur crée";
                 router.push("/utilisateur");

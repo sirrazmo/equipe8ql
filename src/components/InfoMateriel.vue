@@ -236,7 +236,8 @@ export default {
                 Version: this.version
                 })
             }
-           
+            document.getElementById("message").innerText = "Matériel modifié";
+            router.push("/");
            
         },
         async supprimer() {
