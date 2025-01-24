@@ -168,7 +168,7 @@ export default {
                 console.log("Mise à jour en cours...");
                 const utilisateurRef = doc(db, "utilisateurs", this.$route.params.id);
                 await updateDoc(utilisateurRef, {
-                    Prenom: this.prenom,
+                    Prénom: this.prenom,
                     Nom: this.nom,
                     admin: this.choix,
                     email: this.email
