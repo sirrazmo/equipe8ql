@@ -51,6 +51,7 @@ export default {
       document.getElementById("CO").innerText = "Connexion";
       document.getElementById("nomUser").innerText = "";
       router.push("/");
+      setTimeout(() => {document.getElementById("message").innerText = "";},3000);
     }
   },
 
@@ -77,29 +78,27 @@ export default {
 
     async connexion() {
       const auth = getAuth();
-      setPersistence(auth, browserSessionPersistence).then(() => {
-        signInWithEmailAndPassword(auth, this.email, this.password)
-      })
-        .then((userCredential) => {
-          // Signed in 
+      try{
+          await setPersistence(auth, browserSessionPersistence);
+          const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
           const user = userCredential.user;
-
-        })
-        .catch((error) => {
-          this.ErreurConnexion = true;
+          alert("Connexion effectuée");
+          
+          document.getElementById("CO").innerText = "Déconnexion";
+          document.getElementById("nomUser").innerText = this.recupererNom(this.email);
+          router.push("/");
+         
+        } catch (error) {
           const errorCode = error.code;
-          const errorMessage = error.message;
-        });
-
-      document.getElementById("message").innerText = "Connexion effectuée";
-      document.getElementById("CO").innerText = "Déconnexion";
-      document.getElementById("nomUser").innerText = String(this.recupererNom(this.email));
-      router.push("/");
-
-
+          let errorMessage = "Email ou mot de passe incorrect.";
+          alert(errorMessage);
+          this.email = "";
+          this.password = "";
+       }
     }
   }
 };
+
 
 
 

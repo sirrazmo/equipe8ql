@@ -2,13 +2,13 @@
   <div class="has-background-color" style="min-height: 73vh;">
     <div class="container">
       <p class="title" style="padding-top: 1%; padding-bottom: 1%;">
-        Creation of material
+        Creation d'un matériel
       </p>
     </div>
 
     <div class="container">
       <div class="field">
-        <label class="label">Name</label>
+        <label class="label">Nom</label>
         <div class="control">
           <input class="input" type="text" v-model="nom" placeholder="Name" required>
         </div>
@@ -32,7 +32,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Reference</label>
+        <label class="label">Référence</label>
         <div class="control">
           <input class="input" type="text" v-model="reference" placeholder="Ref : AN185 / AP748 / XX784" required>
         </div>
@@ -40,7 +40,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Picture</label>
+        <label class="label">Image</label>
         <div class="control">
           <input class="input" type="text" v-model="imagePath" placeholder="URL picture" required>
         </div>
@@ -52,7 +52,7 @@
       </div>
 
       <div class="field">
-        <label class="label">Phone number</label>
+        <label class="label">Numéro de téléphone</label>
         <div class="control">
           <input class="input" type="tel" v-model="telephone" @keydown="checkDigit" placeholder="ex : 0678145936"
             required>
@@ -63,7 +63,7 @@
         <div class="columns is-centered">
           <div class="column is-narrow">
             <p class="control">
-              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel(verificationMateriel(nom, version, reference,imagePath, telephone))">
+              <button class="button is-warning is-rounded is-center" type="submit" @click="creerMateriel()">
                 Créer le matériel
               </button>
             </p>
@@ -81,6 +81,8 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import router from '../router.js';
 import { getAuth } from 'firebase/auth';
+import {useVerificationMateriel } from '../verification.js'
+
 
 export default {
   async mounted() {
@@ -101,6 +103,7 @@ export default {
     return {
       file: null,
       telephone: "",
+      type: "",
       reference: "",
       version: "",
       nom: "",
@@ -113,10 +116,31 @@ export default {
     };
   },
 
+  setup() {
+    
+  },
+
   methods: {
+    async creerMateriel() {
+      let verif = false;
+      try {
+        this.nameError = "";
+        this.versionError = "";
+        this.referenceError = "";
+        this.imageError = "";
+        this.telephoneError = "";
+        verif = useVerificationMateriel(this.nom,this.version,this.reference,this.imagePath,this.telephone);
+      } catch (e) {
 
+        for(const error of e) {
+          if (error.code == 1) { this.nameError = error.message; }
+          if (error.code == 2) { this.versionError = error.message; }
+          if (error.code == 3) { this.referenceError = error.message; }
+          if (error.code == 4) { this.imageError = error.message; }
+          if (error.code == 5) { this.telephoneError = error.message; }
+        }
+      }
 
-    async creerMateriel(verif) {
       if (verif){
         const docRef = await addDoc(collection(db, "materiels"), {
           Nom: this.nom,
@@ -132,47 +156,6 @@ export default {
         router.push("/");
       }
     },
-
-    verificationMateriel(nom, version, reference, imagePath, telephone) {
-      this.nameError = "";
-      this.versionError = "";
-      this.referenceError = "";
-      this.imageError = "";
-      this.telephoneError = "";
-      if (!nom || nom.length < 1 || nom.length > 30) {
-        this.nameError = "Le nom doit être entre 1 et 30 caractères.";
-        return false;
-      }
-
-      if (!version || version.length < 3 || version.length > 15) {
-        this.versionError = "La version doit être entre 3 et 15 caractères.";
-        return false;
-      }
-
-      if (!reference || !/^(AN|AP|XX)\d{3}$/.test(reference)) {
-        this.referenceError = "La référence doit commencer par AN, AP, ou XX et est suvie par 3 chiffres.";
-        return false;
-      }
-
-      if (!imagePath || !/^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp))$/.test(imagePath) ) {
-        this.imageError = "L'url n'est pas valide";
-        return false;
-      }
-
-
-      if (!telephone || !/^\d{10}$/.test(telephone)) {
-        this.telephoneError = "Le numéro de téléphone doit correspondre à 10 chiffres.";
-        return false;
-      }
-
-      return true;
-    },
-
-    selectionFichier(event) {
-      this.file = event.target.files[0];
-    },
-
-
 
     checkDigit(event) {
       if (event.key.length == 1 && isNaN(Number(event.key))) {
