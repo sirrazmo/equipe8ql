@@ -139,6 +139,7 @@ export default {
             this.prenom = utilisateur.get("Prénom");
             this.choix = utilisateur.get("admin");
             this.email = utilisateur.get("email");
+            this.matricule = utilisateur.get("Matricule")
         },
         
         valider() {

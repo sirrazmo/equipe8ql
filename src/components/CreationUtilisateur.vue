@@ -144,8 +144,8 @@ export default {
                     Matricule: this.matricule,
                     Nom: this.nom,
                     Prenom: this.prenom,
-                    Administrateur: this.admin,
-                    Email: this.email,
+                    admin: this.admin,
+                    email: this.email,
                 });
                 createUserWithEmailAndPassword(auth, this.email, this.password);
                 console.log("Document inséré avec ID: ", docRef.id);
