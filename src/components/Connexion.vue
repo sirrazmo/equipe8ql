@@ -82,8 +82,7 @@ export default {
           await setPersistence(auth, browserSessionPersistence);
           const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
           const user = userCredential.user;
-          alert("Connexion effectuée");
-          
+          document.getElementById("message").innerText = "Connexion réussie";
           document.getElementById("CO").innerText = "Déconnexion";
           document.getElementById("nomUser").innerText = this.recupererNom(this.email);
           router.push("/");
