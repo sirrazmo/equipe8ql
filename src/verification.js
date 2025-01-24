@@ -35,7 +35,7 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
     return true;
 }
 
-export function useVerificationUtilisateur(nom, prenom, admin, email) {
+export function useVerificationUtilisateur(nom, prenom, admin, email, password) {
 
     function errorUtilisateur(message, code) {
         const error = new Error(message);
