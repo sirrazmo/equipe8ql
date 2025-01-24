@@ -150,6 +150,7 @@ export default {
                 createUserWithEmailAndPassword(auth, this.email, this.password);
                 console.log("Document inséré avec ID: ", docRef.id);
                 document.getElementById("message").innerText = "Utilisateur crée";
+                document.getElementById("nomUser").innerText = "";
                 router.push("/");
             }
         },
