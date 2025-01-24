@@ -35,9 +35,8 @@
             <div class="field">
                 <label class="label">Administrateur</label>
                 <div class="control">
-                    <input class="input" type="text" v-model="type" placeholder="Oui/Non" required>
+                    <input class="input" type="text" v-model="admin" placeholder="Oui/Non" required>
                 </div>
-                <p class="help is-danger" v-if="adminError">{{ adminError }}</p>
             </div>
 
             <div class="field">
@@ -78,7 +77,7 @@
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import router from '../router.js';
-import { getAuth } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useVerificationUtilisateur } from '../verification.js'
 
 export default {
@@ -107,7 +106,6 @@ export default {
             matricule: "",
             nomError: "",
             prenomError: "",
-            adminError: "",
             emailError: "",
             passwordError: "",
             matriculeError: "",
@@ -120,22 +118,20 @@ export default {
 
     methods: {
         async creerUtilisateur() {
-            //const auth = getAuth();
+            const auth = getAuth();
             let verif = false;
             try {
                 this.nomError = "";
                 this.prenomError = "";
-                this.adminError = "";
                 this.emailError = "";
                 this.passwordError = "";
                 this.matriculeError = "";
-                verif = useVerificationUtilisateur(this.nom, this.prenom, this.admin, this.email, this.password, this.matricule);
+                verif = useVerificationUtilisateur(this.nom, this.prenom, this.email, this.password, this.matricule);
             } catch (e) {
 
                 for (const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
-                    if (error.code == 3) { this.adminError = error.message; }
                     if (error.code == 4) { this.emailError = error.message; }
                     if (error.code == 5) { this.passwordError = error.message; }
                     if (error.code == 6) { this.matriculeError = error.message; }
@@ -149,7 +145,7 @@ export default {
                     Administrateur: this.admin,
                     Email: this.email,
                 });
-                //createUserWithEmailAndPassword(auth, this.email, this.password);
+                createUserWithEmailAndPassword(auth, this.email, this.password);
                 console.log("Document inséré avec ID: ", docRef.id);
                 document.getElementById("message").innerText = "Utilisateur crée";
                 router.push("/utilisateur");
