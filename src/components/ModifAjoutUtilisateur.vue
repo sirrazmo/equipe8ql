@@ -90,7 +90,7 @@
 import router from '../router.js';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.js';
-import { doc,getDoc } from 'firebase/firestore';
+import { doc,getDoc, updateDoc } from 'firebase/firestore';
 import {useVerificationUtilisateur} from '../verification.js';
 
 export default {
@@ -121,6 +121,7 @@ export default {
             matriculeError: "",
             motDePasseError: "",
             emailError:"",
+            adminError:"",
             choix: 'utilisateur'
         };
     },
@@ -152,29 +153,31 @@ export default {
                 this.matriculeError= "";
                 this.motDePasseError= "";
                 this.emailError="";
-                verif = useVerificationUtilisateur(this.nom,this.prenom,this.email, this.matricule,this.motDePasse);
+                verif = useVerificationUtilisateur(this.nom,this.prenom, this.email,this.motDePasse, this.matricule);
             } catch (e) {
                 for(const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
                     if (error.code == 3) { this.emailError = error.message; }
-                    if (error.code == 4) { this.matriculeError = error.message; }
-                    if (error.code == 5) { this.motDePasseError = error.message; }
+                    if (error.code == 4) { this.motDePasseError = error.message; }
+                    if (error.code == 5) { this.matriculeError = error.message; }
                 }
             }
 
-            alert('Modifier appeler')
+            if (verif) {
+                console.log("Mise à jour en cours...");
+                const utilisateurRef = doc(db, "utilisateurs", this.$route.params.id);
+                await updateDoc(utilisateurRef, {
+                    Prenom: this.prenom,
+                    Nom: this.nom,
+                    admin: this.choix,
+                    email: this.email
+                });
+                console.log("Mise à jour terminée.");
+            } else {
+                console.log("Les données ne sont pas valides.");
+            }
 
-            /*if (verif) {
-                const materielRef = doc(db, "materiels", this.$route.params.id)
-                await updateDoc(materielRef, {
-                Nom: this.nom,
-                Numero: this.numero,
-                Reference: this.reference,
-                Photo_url: this.image,
-                Version: this.version
-                })
-            }*/
            
            
         },
