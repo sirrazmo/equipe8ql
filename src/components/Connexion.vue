@@ -81,6 +81,7 @@ export default {
       try{
           await setPersistence(auth, browserSessionPersistence);
           const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
+          const user = userCredential.user;
           alert("Connexion effectuée");
           
           document.getElementById("CO").innerText = "Déconnexion";
