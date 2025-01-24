@@ -19,11 +19,15 @@
           </a>
 
           <a class="navbar-item">
+            <RouterLink to="/creation-materiel">Créer un matériel</RouterLink>
+          </a>
+
+          <a class="navbar-item">
             <RouterLink to="/utilisateur">Utilisateurs</RouterLink>
           </a>
 
           <a class="navbar-item">
-            <RouterLink to="/creation-materiel">Créer un matériel</RouterLink>
+            <RouterLink to="/creation-utilisateur">Créer un utilisateur</RouterLink>
           </a>
 
         </div>

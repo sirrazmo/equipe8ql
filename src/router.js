@@ -9,19 +9,19 @@ import LegalView from './components/LegalPage.vue'
 import Contact from './components/ContactPage.vue'
 import AboutPage from './components/AboutPage.vue'
 import InfoMateriel from './components/InfoMateriel.vue'
+import CreationUtilisateur from './components/CreationUtilisateur.vue'
 
 const routes = [
   { path: '/', component: AffichageMaterielView },
   { path: '/connection', component: ConnectionView },
   {path: '/utilisateur', component: AffichageUtilisateurView},
   {path: '/creation-materiel', component: CreationMateriel},
-  //{path: '/info-utilisateur', component : ModifAjoutUtilisateur},
   {path: '/info-utilisateur/:id', component : ModifAjoutUtilisateur},
   {path: '/info-materiel/:id', component : InfoMateriel},
-  //{path: '/info-materiel', component : InfoMateriel},
   {path: '/legalPage', component: LegalView},
   {path: '/contact', component:Contact},
-  {path: '/about', component:AboutPage}
+  {path: '/about', component:AboutPage},
+  {path: '/creation-utilisateur', component : CreationUtilisateur},
 ]
 
 const router = createRouter({

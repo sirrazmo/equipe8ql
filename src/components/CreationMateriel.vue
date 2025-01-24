@@ -81,7 +81,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase.js';
 import router from '../router.js';
 import { getAuth } from 'firebase/auth';
-import {useVerificationMateriel } from '../verification.js'
+import { useVerificationMateriel } from '../verification.js'
 
 
 export default {
@@ -112,12 +112,12 @@ export default {
       versionError: "",
       referenceError: "",
       telephoneError: "",
-      imageError:""
+      imageError: ""
     };
   },
 
   setup() {
-    
+
   },
 
   methods: {
@@ -129,10 +129,10 @@ export default {
         this.referenceError = "";
         this.imageError = "";
         this.telephoneError = "";
-        verif = useVerificationMateriel(this.nom,this.version,this.reference,this.imagePath,this.telephone);
+        verif = useVerificationMateriel(this.nom, this.version, this.reference, this.imagePath, this.telephone);
       } catch (e) {
 
-        for(const error of e) {
+        for (const error of e) {
           if (error.code == 1) { this.nameError = error.message; }
           if (error.code == 2) { this.versionError = error.message; }
           if (error.code == 3) { this.referenceError = error.message; }
@@ -141,7 +141,7 @@ export default {
         }
       }
 
-      if (verif){
+      if (verif) {
         const docRef = await addDoc(collection(db, "materiels"), {
           Nom: this.nom,
           Type: this.type,
@@ -149,7 +149,7 @@ export default {
           Reference: this.reference,
           Photo_url: this.imagePath,
           Numero: parseInt(this.telephone),
-          RéserverPar:""
+          RéserverPar: ""
         });
         console.log("Document inséré avec ID: ", docRef.id);
         document.getElementById("message").innerText = "Matériel crée";

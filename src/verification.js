@@ -34,3 +34,37 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
 
     return true;
   }
+
+  export function useVerificationUtilisateur(nom, prenom, admin, email) {
+
+    function errorUtilisateur(message, code) {
+        const error = new Error(message);
+        error.code = code;
+        return error;
+    }
+
+    var listError = [];
+
+    if (!nom || nom.length < 1 || nom.length > 30) {
+        listError.push(errorUtilisateur("Le nom doit être entre 1 et 30 caractères.",1));
+    }
+
+    if (!prenom || prenom.length < 1 || prenom.length > 30) {
+        listError.push(errorUtilisateur("Le prénom doit être entre 1 et 30 caractères.",2));
+    }
+
+    if (!admin || (admin != "Oui" && admin != "Non")) {
+        listError.push(errorUtilisateur("Vous devez entrer si 'Oui' ou 'Non' l'utilisateur sera administrateur.",3));
+    }
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/) {
+        listError.push(errorUtilisateur("Veuillez entrer une adresse mail correcte.",4));
+    }
+
+
+    if (listError.length > 0) {
+        throw listError;
+    }
+
+    return true;
+  }
