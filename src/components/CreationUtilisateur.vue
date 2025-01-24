@@ -7,6 +7,15 @@
         </div>
 
         <div class="container">
+
+            <div class="field">
+                <label class="label">Matricule</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="matricule" placeholder="Matricule" required>
+                </div>
+                <p class="help is-danger" v-if="matriculeError">{{ matriculeError }}</p>
+            </div>
+
             <div class="field">
                 <label class="label">Nom</label>
                 <div class="control">
@@ -37,6 +46,14 @@
                     <input class="input" type="text" v-model="email" placeholder="exemple@exemple.com" required>
                 </div>
                 <p class="help is-danger" v-if="emailError">{{ emailError }}</p>
+            </div>
+
+            <div class="field">
+                <label class="label">Mot de passe</label>
+                <div class="control">
+                    <input class="input" type="text" v-model="password" placeholder="Mot de passe" required>
+                </div>
+                <p class="help is-danger" v-if="passwordError">{{ passwordError }}</p>
             </div>
 
             <div class="field">
@@ -86,6 +103,8 @@ export default {
             admin: "Non",
             prenom: "",
             nom: "",
+            password: "",
+            matricule: "",
         };
     },
 
@@ -101,7 +120,9 @@ export default {
                 this.prenomError = "";
                 this.adminError = "";
                 this.emailError = "";
-                verif = useVerificationUtilisateur(this.nom, this.prenom, this.admin, this.email);
+                this.passwordError = "";
+                this.matriculeError = "";
+                verif = useVerificationUtilisateur(this.nom, this.prenom, this.admin, this.email, this.matricule);
             } catch (e) {
 
                 for (const error of e) {
@@ -109,14 +130,17 @@ export default {
                     if (error.code == 2) { this.prenomError = error.message; }
                     if (error.code == 3) { this.adminError = error.message; }
                     if (error.code == 4) { this.emailError = error.message; }
+                    if (error.code == 5) { this.passwordError = error.message; }
+                    if (error.code == 6) { this.matriculeError = error.message; }
                 }
             }
             if (verif) {
                 const docRef = await addDoc(collection(db, "utilisateurs"), {
+                    Matricule: this.matricule,
                     Nom: this.nom,
-                    prenom: this.prenom,
-                    admin: this.admin,
-                    email: this.email,
+                    Prenom: this.prenom,
+                    Administrateur: this.admin,
+                    Email: this.email,
                 });
                 console.log("Document inséré avec ID: ", docRef.id);
                 document.getElementById("message").innerText = "Utilisateur crée";

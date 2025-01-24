@@ -35,7 +35,7 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
     return true;
 }
 
-export function useVerificationUtilisateur(nom, prenom, admin, email, password) {
+export function useVerificationUtilisateur(nom, prenom, admin, email, password, matricule) {
 
     function errorUtilisateur(message, code) {
         const error = new Error(message);
@@ -62,11 +62,16 @@ export function useVerificationUtilisateur(nom, prenom, admin, email, password) 
     }
 
     if (!password || !/^(?=.*[a-z])(?=.*[A-Z])(?=.*[@?!ù$^&+=\-*/])(?=.*[0-9]).{8,30}$/.test(password)) {
-        listError.push(errorUtilisateur("Le mot de passe doit contenir une lettre minuscule, une lettre majuscule, un caractère spécial, et avoir une longueur entre 8 et 30 caractères.", 5));
+        listError.push(errorUtilisateur("Le mot de passe doit contenir une lettre minuscule, une lettre majuscule, un caractère spécial, et avoir une longueur entre 8 et 30 caractères.",
+             5));
     }
 
     if (listError.length > 0) {
         throw listError;
+    }
+
+    if (!matricule || !/([a-zA-Z]){7}$/.test(matricule)) {
+        listError.push(errorUtilisateur("Le matricule doit faire 7 caractères alphabétique", 6));
     }
 
     return true;
