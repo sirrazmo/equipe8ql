@@ -134,16 +134,16 @@ export default {
                 for (const error of e) {
                     if (error.code == 1) { this.nomError = error.message; }
                     if (error.code == 2) { this.prenomError = error.message; }
-                    if (error.code == 3) { this.matriculeError = error.message; }
                     if (error.code == 4) { this.emailError = error.message; }
                     if (error.code == 5) { this.passwordError = error.message; }
+                    if (error.code == 6) { this.matriculeError = error.message; }
                 }
             }
             if (verif) {
                 const docRef = await addDoc(collection(db, "utilisateurs"), {
                     Matricule: this.matricule,
                     Nom: this.nom,
-                    Prenom: this.prenom,
+                    Prénom: this.prenom,
                     admin: this.admin,
                     email: this.email,
                 });
