@@ -53,11 +53,11 @@ export function useVerificationUtilisateur(nom, prenom, email, password, matricu
         listError.push(errorUtilisateur("Le prénom doit être entre 1 et 30 caractères.", 2));
     }
 
-    if (!matricule || !/([a-zA-Z]){7}$/.test(matricule)) {
+    if (!matricule || !/([a-zA-Z])$/.test(matricule) || matricule.length != 7) {
         listError.push(errorUtilisateur("Le matricule doit faire 7 caractères alphabétique", 3));
     }
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/) {
+    if (!email || !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]{2,}\.[a-zA-Z]{2,4}$/.test(email) || email.length > 50) {
         listError.push(errorUtilisateur("Veuillez entrer une adresse mail correcte.", 4));
     }
 
