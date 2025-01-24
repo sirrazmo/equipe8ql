@@ -35,9 +35,9 @@
             <div class="field">
                 <label class="label">Administrateur</label>
                 <div class="control">
-                    <label><input type="radio" v-model="admin" value="Oui"> Oui</label>
+                    <label><input type="radio" v-model="admin" value=true> Oui</label>
                     <br>
-                    <label><input type="radio" v-model="admin" value="Non"> Non</label>
+                    <label><input type="radio" v-model="admin" value=false> Non</label>
                 </div>
             </div>
 
