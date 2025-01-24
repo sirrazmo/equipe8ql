@@ -235,9 +235,10 @@ export default {
                 Photo_url: this.image,
                 Version: this.version
                 })
+                document.getElementById("message").innerText = "Matériel modifié";
+                router.push("/");
             }
-            document.getElementById("message").innerText = "Matériel modifié";
-            router.push("/");
+            
            
         },
         async supprimer() {
