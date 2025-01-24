@@ -10,7 +10,7 @@
       <div class="field">
         <label class="label">Nom</label>
         <div class="control">
-          <input class="input" type="text" v-model="nom" placeholder="Name" required>
+          <input class="input" type="text" v-model="nom" placeholder="Nom" required>
         </div>
         <p class="help is-danger" v-if="nameError">{{ nameError }}</p>
       </div>
@@ -18,7 +18,7 @@
       <div class="field">
         <label class="label">Type</label>
         <div class="control">
-          <input class="input" type="text" v-model="type" placeholder="type" required>
+          <input class="input" type="text" v-model="type" placeholder="Type" required>
         </div>
         <p class="help is-danger" v-if="typeError">{{ typeError }}</p>
       </div>
@@ -42,7 +42,7 @@
       <div class="field">
         <label class="label">Image</label>
         <div class="control">
-          <input class="input" type="text" v-model="imagePath" placeholder="URL picture" required>
+          <input class="input" type="text" v-model="imagePath" placeholder="URL de l'image" required>
         </div>
         <p class="help is-danger" v-if="imageError">{{ imageError }}</p>
       </div>

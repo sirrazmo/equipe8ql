@@ -89,9 +89,7 @@ export default {
           router.push("/");
          
         } catch (error) {
-          const errorCode = error.code;
-          let errorMessage = "Email ou mot de passe incorrect.";
-          alert(errorMessage);
+          this.ErreurConnexion = true;
           this.email = "";
           this.password = "";
        }

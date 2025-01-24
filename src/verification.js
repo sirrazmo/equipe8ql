@@ -8,11 +8,11 @@ export function useVerificationMateriel(nom, version, reference, imagePath, tele
 
     var listError = [];
 
-    if (!nom || nom.length < 1 || nom.length > 30) {
+    if (!nom || !/^[a-zA-Z- ]{1,30}$/.test(nom)) {
         listError.push(errorMaterial("Le nom doit être entre 1 et 30 caractères.",1));
     }
 
-    if (!version || version.length < 3 || version.length > 15) {
+    if (!version || !/^[a-zA-Z0-9-_. ]{3,15}$/.test(version)) {
         listError.push(errorMaterial("La version doit être entre 3 et 15 caractères.",2));
     }
 

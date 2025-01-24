@@ -5,23 +5,25 @@
                 <br>
                 <div class="columns is-mobile">
                     <div class="column">
-                        <p>Last name</p>
+                        <p>Nom</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" v-model="this.Nom" id="Nom" required>
+                            <input class="input" type="text" v-model="this.nom" id="Nom" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-user"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="nomError">{{ nomError }}</p>
                         <a></a>
                         <br>
 
-                        <p>First name</p>
+                        <p>Prénom</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" v-model="this.Prenom" id="Prenom" required>
+                            <input class="input" type="text" v-model="this.prenom" id="Prenom" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-user"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="prenomError">{{ prenomError }}</p>
 
                         <br><br>
 
@@ -37,38 +39,41 @@
                     <div class="column">
                         <p>Email</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="email" v-model="this.Email" id="Email" required>
+                            <input class="input" type="email" v-model="this.email" id="Email" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-at"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="emailError">{{ emailError }}</p>
 
                         <br>
 
-                        <p>Registration number</p>
+                        <p>Matricule</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="text" placeholder="Registration number" id="Matricule" required>
+                            <input class="input" type="text" v-model="this.matricule" id="Matricule" required>
                             <span class="icon is-small is-left">
                                 <i class="fa-solid fa-id-card-clip"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="matriculeError">{{ matriculeError }}</p>
 
                         <br>
 
-                        <p>Password</p>
+                        <p>Mot de passe</p>
                         <p class="control has-icons-left">
-                            <input class="input" type="password" placeholder="Password" id="MotDePasse" required>
+                            <input class="input" type="password" v-model="this.motDePasse" id="MotDePasse" required>
                             <span class="icon is-small is-left">
                                 <i class="fas fa-lock"></i>
                             </span>
                         </p>
+                        <p class="help is-danger" v-if="motDePasseError">{{ motDePasseError }}</p>
                     </div>
                 </div>
 
                 <div class="columns is-centered">
                     <div class="column is-narrow">
-                        <button class="button is-warning is-rounded is-center" @click="Valider">
-                            Submit
+                        <button class="button is-warning is-rounded is-center" @click="modifier">
+                            Modifier
                         </button>
                     </div>
                 </div>
@@ -86,6 +91,7 @@ import router from '../router.js';
 import { getAuth } from 'firebase/auth';
 import { db } from '../firebase.js';
 import { doc,getDoc } from 'firebase/firestore';
+import {useVerificationUtilisateur} from '../verification.js';
 
 export default {
     async mounted() {
@@ -105,11 +111,16 @@ export default {
     name: 'ModifAjoutUtlisateur',
     data() {
         return {
-            Nom: '',
-            Prenom: '',
-            Matricule: '',
-            MotDePasse: '',
-            Email: '',
+            nom: '',
+            prenom: '',
+            matricule: '',
+            motDePasse: '',
+            email: '',
+            nomError: "",
+            prenomError: "",
+            matriculeError: "",
+            motDePasseError: "",
+            emailError:"",
             choix: 'utilisateur'
         };
     },
@@ -123,15 +134,50 @@ export default {
             const utlisateurRef = doc(db, "utilisateurs", this.$route.params.id)
             const utilisateur = await getDoc(utlisateurRef);
             
-            this.Nom = utilisateur.get("Nom");
-            this.Prenom = utilisateur.get("Prénom");
+            this.nom = utilisateur.get("Nom");
+            this.prenom = utilisateur.get("Prénom");
             this.choix = utilisateur.get("admin");
-            this.Email = utilisateur.get("email");
+            this.email = utilisateur.get("email");
         },
         
-        Valider() {
+        valider() {
             alert('Valider appeler')
-        }
+        },
+
+        async modifier() {
+            let verif = false;
+            try {
+                this.nomError = "";
+                this.prenomError= "";
+                this.matriculeError= "";
+                this.motDePasseError= "";
+                this.emailError="";
+                verif = useVerificationUtilisateur(this.nom,this.prenom,this.email, this.matricule,this.motDePasse);
+            } catch (e) {
+                for(const error of e) {
+                    if (error.code == 1) { this.nomError = error.message; }
+                    if (error.code == 2) { this.prenomError = error.message; }
+                    if (error.code == 3) { this.emailError = error.message; }
+                    if (error.code == 4) { this.matriculeError = error.message; }
+                    if (error.code == 5) { this.motDePasseError = error.message; }
+                }
+            }
+
+            alert('Modifier appeler')
+
+            /*if (verif) {
+                const materielRef = doc(db, "materiels", this.$route.params.id)
+                await updateDoc(materielRef, {
+                Nom: this.nom,
+                Numero: this.numero,
+                Reference: this.reference,
+                Photo_url: this.image,
+                Version: this.version
+                })
+            }*/
+           
+           
+        },
     }
 };
 </script>
