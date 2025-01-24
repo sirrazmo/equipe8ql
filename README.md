@@ -6,7 +6,8 @@
 ```
 Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
-3. Installer les packages manquants (dans le terminal du projet) :
+3. Télécharger le projet
+4. Installer les packages manquants (dans le terminal du projet) :
 ```
 npm install
 ```
