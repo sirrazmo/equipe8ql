@@ -88,26 +88,12 @@
 
 <script>
 import router from '../../router.js';
-import { getAuth } from 'firebase/auth';
+//import { getAuth } from 'firebase/auth';
 import { db } from '../../firebase.js';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useVerificationUtilisateur } from '../../verification.js';
 
 export default {
-    async mounted() {
-        const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
-        if (!auth.currentUser) {
-            // Vérification si l'utilisateur est connecté
-            alert("Vous n'êtes pas connecté, connectez-vous pour accéder à la page.");
-            router.push("/"); // Redirection vers la page d'accueil
-        } else {
-            // Vérification des droits d'accès pour un utilisateur non administrateur
-            if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
-                alert("Vous n'êtes pas autorisé à accéder à cette page.");
-                router.push("/"); // Redirection vers la page d'accueil
-            }
-        }
-    },
     /* eslint-disable */
     name: 'InfoUtlisateur',
     data() {
@@ -145,6 +131,7 @@ export default {
             this.choix = utilisateur.get("admin");
             this.email = utilisateur.get("email");
             this.matricule = utilisateur.get("Matricule");
+            
         },
 
         async modifier() {

@@ -87,6 +87,7 @@ export default {
         document.getElementById("CO").innerText = "Déconnexion";
         document.getElementById("nomUser").innerText = this.recupererNom(this.email);
         router.push("/");
+        setTimeout(() => { document.getElementById("message").innerText = ""; }, 3000);
 
       } catch (error) {
         //Affichage de l'erreur + mise des champs à vide

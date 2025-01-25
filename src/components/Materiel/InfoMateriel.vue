@@ -106,10 +106,11 @@
 <script>
 
 import { db } from '../../firebase.js';
-import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc,getDocs, deleteDoc, updateDoc, collection } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import router from '../../router.js';
 import { useVerificationMateriel } from '../../verification.js'; // Importation de la fonction de vérification des données matérielles
+import { ref, onMounted } from 'vue';
 
 export default {
     /* eslint-disable */
@@ -145,7 +146,13 @@ export default {
             this.connecte = false;
         } else {
             // Vérification des droits d'accès de l'utilisateur connecté
-            if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
+            await this.fetchUtilisateurs();
+      
+            const currentUser = this.utilisateurs.find(
+                (utilisateur) => utilisateur.email === auth.currentUser.email
+            );
+
+            if (!currentUser.admin) {
                 this.roleAdmin = false;
             }
         }
@@ -169,6 +176,24 @@ export default {
     created() {
         // Appel de la méthode pour récupérer les données du matériel
         this.getMateriel();
+    },
+
+    setup() {
+        const utilisateurs = ref([]);
+
+        const fetchUtilisateurs = async () => {
+        const queryUtilisateursSnapshot = await getDocs(collection(db, 'utilisateurs'));
+        utilisateurs.value = queryUtilisateursSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        };
+
+        onMounted(() => {
+        fetchUtilisateurs();
+        });
+
+        return {
+        utilisateurs,
+        fetchUtilisateurs,
+        };
     },
 
     methods: {

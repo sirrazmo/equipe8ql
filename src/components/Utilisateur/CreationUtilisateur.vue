@@ -1,89 +1,97 @@
 <template>
     <div class="has-background-color" style="min-height: 73vh;">
-        <div class="container">
+        <div v-if="isAdmin">
+            <div class="container">
             <p class="title" style="padding-top: 1%; padding-bottom: 1%;">
                 Création d'un utilisateur
             </p>
-        </div>
-
-        <div class="container">
-
-            <div class="field">
-                <label class="label">Matricule</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="matricule" placeholder="Matricule" required>
-                </div>
-                <p class="help is-danger" v-if="matriculeError">{{ matriculeError }}</p>
             </div>
 
-            <div class="field">
-                <label class="label">Nom</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="nom" placeholder="Nom" required>
-                </div>
-                <p class="help is-danger" v-if="nomError">{{ nomError }}</p>
-            </div>
+            <div class="container">
 
-            <div class="field">
-                <label class="label">Prénom</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="prenom" placeholder="Prénom" required>
+                <div class="field">
+                    <label class="label">Matricule</label>
+                    <div class="control">
+                        <input class="input" type="text" v-model="matricule" placeholder="Matricule" required>
+                    </div>
+                    <p class="help is-danger" v-if="matriculeError">{{ matriculeError }}</p>
                 </div>
-                <p class="help is-danger" v-if="prenomError">{{ prenomError }}</p>
-            </div>
 
-            <div class="field">
-                <label class="label">Administrateur</label>
-                <div class="control">
-                    <label><input type="radio" v-model="admin" value=true> Oui</label>
-                    <br>
-                    <label><input type="radio" v-model="admin" value=false checked> Non</label>
+                <div class="field">
+                    <label class="label">Nom</label>
+                    <div class="control">
+                        <input class="input" type="text" v-model="nom" placeholder="Nom" required>
+                    </div>
+                    <p class="help is-danger" v-if="nomError">{{ nomError }}</p>
                 </div>
-            </div>
 
-            <div class="field">
-                <label class="label">Adresse électronique</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="email" placeholder="exemple@exemple.com" required>
+                <div class="field">
+                    <label class="label">Prénom</label>
+                    <div class="control">
+                        <input class="input" type="text" v-model="prenom" placeholder="Prénom" required>
+                    </div>
+                    <p class="help is-danger" v-if="prenomError">{{ prenomError }}</p>
                 </div>
-                <p class="help is-danger" v-if="emailError">{{ emailError }}</p>
-            </div>
 
-            <div class="field">
-                <label class="label">Mot de passe</label>
-                <div class="control">
-                    <input class="input" type="text" v-model="password" placeholder="Mot de passe" required>
-                </div>
-                <p class="help is-danger" v-if="passwordError">{{ passwordError }}</p>
-            </div>
-
-            <div class="field">
-                <div class="columns is-centered">
-                    <div class="column is-narrow">
-                        <p class="control">
-                            <button class="button is-warning is-rounded is-center" type="submit"
-                                @click="creerUtilisateur()">
-                                Créer l'utilisateur
-                            </button>
-                        </p>
+                <div class="field">
+                    <label class="label">Administrateur</label>
+                    <div class="control">
+                        <label><input type="radio" v-model="admin" :value=true> Oui</label>
                         <br>
+                        <label><input type="radio" v-model="admin" :value=false checked> Non</label>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Adresse électronique</label>
+                    <div class="control">
+                        <input class="input" type="text" v-model="email" placeholder="exemple@exemple.com" required>
+                    </div>
+                    <p class="help is-danger" v-if="emailError">{{ emailError }}</p>
+                </div>
+
+                <div class="field">
+                    <label class="label">Mot de passe</label>
+                    <div class="control">
+                        <input class="input" type="password" v-model="password" placeholder="Mot de passe" required>
+                    </div>
+                    <p class="help is-danger" v-if="passwordError">{{ passwordError }}</p>
+                </div>
+
+                <div class="field">
+                    <div class="columns is-centered">
+                        <div class="column is-narrow">
+                            <p class="control">
+                                <button class="button is-warning is-rounded is-center" type="submit"
+                                    @click="creerUtilisateur()">
+                                    Créer l'utilisateur
+                                </button>
+                            </p>
+                            <br>
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
+       
 
     </div>
 </template>
 
 <script>
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '../../firebase.js';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db, firebaseConfig } from '../../firebase.js';
 import router from '../../router.js';
 import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useVerificationUtilisateur } from '../../verification.js'
+import { ref, onMounted } from 'vue';
+import { initializeApp } from "firebase/app";
+
 
 export default {
     async mounted() {
+        
         const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
         if (!auth.currentUser) {
             // Vérification si l'utilisateur est connecté
@@ -91,11 +99,18 @@ export default {
             router.push("/"); // Redirection vers la page d'accueil
         } else {
             // Vérification des droits d'accès pour un utilisateur non administrateur
-            if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
+            await this.fetchUtilisateurs();
+        
+            const currentUser = this.utilisateurs.find(
+                (utilisateur) => utilisateur.email === auth.currentUser.email
+            );
+
+            if (!currentUser.admin) {
                 alert("Vous n'êtes pas autorisé à accéder à cette page.");
                 router.push("/"); // Redirection vers la page d'accueil
             }
         }
+        this.isAdmin = true;
     },
     name: 'creationUtilisateur',
     data() {
@@ -103,7 +118,7 @@ export default {
         return {
             file: null,
             email: "",
-            admin: "Non",
+            admin: false,
             prenom: "",
             nom: "",
             password: "",
@@ -113,12 +128,32 @@ export default {
             emailError: "",
             passwordError: "",
             matriculeError: "",
+            isAdmin : false,
+            firebaseConfigAuth : firebaseConfig,
+        };
+    },
+
+    setup() {
+        const utilisateurs = ref([]);
+
+        const fetchUtilisateurs = async () => {
+        const queryUtilisateursSnapshot = await getDocs(collection(db, 'utilisateurs'));
+        utilisateurs.value = queryUtilisateursSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        };
+
+        onMounted(() => {
+            fetchUtilisateurs();
+        });
+
+        return {
+        utilisateurs,
+        fetchUtilisateurs,
         };
     },
 
     methods: {
         async creerUtilisateur() {
-            const auth = getAuth();
+            
             let verif = false;
             try {
                 // Réinitialisation des messages d'erreur avant la vérification
@@ -140,6 +175,7 @@ export default {
             }
             if (verif) {
                 // Si les données sont valides, mise à jour dans la base de données Firestore
+               console.log(this.admin);
                 const docRef = await addDoc(collection(db, "utilisateurs"), {
                     Matricule: this.matricule,
                     Nom: this.nom,
@@ -147,12 +183,18 @@ export default {
                     admin: this.admin,
                     email: this.email,
                 });
-                // Ajout aussi dans l'authentification
-                createUserWithEmailAndPassword(auth, this.email, this.password);
+
+                // Initialise une nouvelle instance Firebase
+                const authApp = initializeApp(this.firebaseConfigAuth,"authApp");
+                //Récupère l'authentification de cette nouvelle instance
+                var detachedAuth = getAuth(authApp);
+                // Ajout dans l'authentification
+                createUserWithEmailAndPassword(detachedAuth,this.email, this.password);
+                
                 console.log("Document inséré avec ID: ", docRef.id);
-                document.getElementById("message").innerText = "Utilisateur crée";
-                document.getElementById("nomUser").innerText = this.prenom + '.' + this.nom;
+                document.getElementById("message").innerText = "Utilisateur " + this.prenom + '.' + this.nom + " créé.";
                 router.push("/");
+                setTimeout(() => { document.getElementById("message").innerText = ""; }, 3000);
             }
         },
 

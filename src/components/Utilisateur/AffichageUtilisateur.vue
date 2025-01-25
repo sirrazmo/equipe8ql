@@ -1,25 +1,27 @@
 <template>
   <div class="has-background-color" style="min-height: 73vh;">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Nom</th>
-          <th>Prénom</th>
-          <th>Administrateur</th>
-          <th>email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="utilisateurs in utilisateurs" :key="utilisateurs.id">
-          <td>{{ utilisateurs.Prénom }}</td>
-          <td>{{ utilisateurs.Nom }}</td>
-          <td>{{ utilisateurs.admin }}</td>
-          <td>{{ utilisateurs.email }}</td>
-          <td><button class="button is-primary is-rounded is-center"
-              @click="getInfoUtilisateurs(utilisateurs.id)">Consulter</button></td>
-        </tr>
-      </tbody>
-    </table>
+    <div v-if="isAdmin">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Administrateur</th>
+            <th>email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="utilisateurs in utilisateurs" :key="utilisateurs.id">
+            <td>{{ utilisateurs.Prénom }}</td>
+            <td>{{ utilisateurs.Nom }}</td>
+            <td>{{ utilisateurs.admin }}</td>
+            <td>{{ utilisateurs.email }}</td>
+            <td><button class="button is-primary is-rounded is-center"
+                @click="getInfoUtilisateurs(utilisateurs.id)">Consulter</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
 </template>
@@ -33,6 +35,12 @@ import { getAuth } from 'firebase/auth';
 export default {
   name: 'FirestoreExample',
 
+  data() {
+    return {
+      isAdmin : false,
+    }
+  },
+
   async mounted() {
     const auth = getAuth(); // Récupération de l'instance d'authentification Firebase
     if (!auth.currentUser) {
@@ -41,11 +49,17 @@ export default {
       router.push("/"); // Redirection vers la page d'accueil
     } else {
       // Vérification des droits d'accès pour un utilisateur non administrateur
-      if (auth.currentUser.email != "admin@admin.com" && auth.currentUser.email != "admin2@admin.com") {
+      await this.fetchUtilisateurs();
+      
+      const currentUser = this.utilisateurs.find(
+        (utilisateur) => utilisateur.email === auth.currentUser.email
+      );
+      if (!currentUser.admin) {
         alert("Vous n'êtes pas autorisé à accéder à cette page.");
         router.push("/"); // Redirection vers la page d'accueil
       }
     }
+    this.isAdmin = true;
   },
 
   setup() {
@@ -63,9 +77,12 @@ export default {
 
     return {
       utilisateurs,
+      fetchUtilisateurs,
     };
   },
+
   methods: {
+
     getInfoUtilisateurs(idUser) {
       console.log(idUser);
       router.push({ path: `/info-utilisateur/${idUser}` });
