@@ -181,7 +181,7 @@ export default {
                     Nom: this.nom,
                     Prénom: this.prenom,
                     admin: this.admin,
-                    email: this.email,
+                    email: this.email.toLowerCase(),
                 });
 
                 // Initialise une nouvelle instance Firebase

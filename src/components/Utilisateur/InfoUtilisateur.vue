@@ -165,7 +165,7 @@ export default {
                     Prénom: this.prenom,
                     Nom: this.nom,
                     admin: this.choix,
-                    email: this.email,
+                    email: this.email.toLowerCase(),
                     Matricule: this.matricule
                 });
 
