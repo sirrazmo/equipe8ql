@@ -32,9 +32,10 @@ describe('InfoMateriel.vue', () => {
       nom: 'Valid Name',
       version: 'v1.0',
       reference: 'AN123',
-      imagePath: 'https://example.com/image.png',
+      image: 'https://example.com/image.png',
       numero: '0612345678',
     });
+
 
     //T033 - Accès page -> vérifie que le bouton modifier est bien invisible si l'on n'est pas admin
     const modifierButton2 = wrapper.find('#modifier');
@@ -60,7 +61,7 @@ describe('InfoMateriel.vue', () => {
       wrapper.vm.nom,
       wrapper.vm.version,
       wrapper.vm.reference,
-      wrapper.vm.imagePath,
+      wrapper.vm.image,
       wrapper.vm.numero
     )).toBe(true);
 
@@ -125,7 +126,7 @@ describe('InfoMateriel.vue', () => {
     expect(wrapper.vm.telephoneError).toBe("Le numéro de téléphone doit correspondre à 10 chiffres.")
 
     //T032 - Image format incohérent
-    await wrapper.setData({ imagePath: 'https://example.com/image.test' })
+    await wrapper.setData({ image: 'https://example.com/image.test' })
     await modifierButton.trigger('click');
     expect(wrapper.vm.imageError).toBe("L'url n'est pas valide")
 
